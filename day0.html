@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Training - Day 0 | Itokyo Academy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #3776ab;
+            --secondary: #ffd43b;
+            --dark: #1a1a1a;
+            --light: #f8f9fa;
+            --success: #28a745;
+            --info: #17a2b8;
+            --warning: #ffc107;
+            --danger: #dc3545;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        /* Full viewport sections */
+        .section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 80px 20px 40px; /* Adjusted to account for fixed navbar */
+            position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+            scroll-margin-top: 60px; /* Ensures navbar doesn't cover section when scrolling to it */
+        }
+
+        .section.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Gradient backgrounds for alternating sections */
+        #why-python {
+            background: linear-gradient(135deg, #f6f9fc 0%, #e9f2fb 100%);
+        }
+
+        #salary {
+            background: linear-gradient(135deg, #edf7ff 0%, #deedf9 100%);
+        }
+
+        #scope {
+            background: linear-gradient(135deg, #f6f9fc 0%, #e9f2fb 100%);
+        }
+
+        #outcomes {
+            background: linear-gradient(135deg, #edf7ff 0%, #deedf9 100%);
+        }
+
+        #level-up {
+            background: linear-gradient(135deg, #f6f9fc 0%, #e9f2fb 100%);
+        }
+
+        #format {
+            background: linear-gradient(135deg, #edf7ff 0%, #deedf9 100%);
+        }
+
+        /* Header styles */
+        header {
+            height: 100vh;
+            background: linear-gradient(135deg, var(--primary) 0%, #2d5f8b 100%);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+        }
+
+        .python-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .python-logo i {
+            font-size: 4rem;
+            margin-right: 1rem;
+            color: var(--secondary);
+        }
+
+        .python-logo h1 {
+            font-size: 4rem;
+            font-weight: 700;
+        }
+
+        .academy-info {
+            margin-top: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .instructor-info {
+            font-style: italic;
+            margin-top: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .header-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            color: white;
+            font-size: 2rem;
+            z-index: 2;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0) translateX(-50%);
+            }
+            40% {
+                transform: translateY(-20px) translateX(-50%);
+            }
+            60% {
+                transform: translateY(-10px) translateX(-50%);
+            }
+        }
+
+        /* Navigation styles */
+        nav {
+            background-color: var(--dark);
+            padding: 0.8rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-item {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Section title styles */
+        .section-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 0.8rem;
+        }
+
+        .section-title i {
+            font-size: 2.2rem;
+            margin-right: 1rem;
+            color: var(--primary);
+        }
+
+        .section-title h2 {
+            font-size: 2.2rem;
+            font-weight: 600;
+        }
+
+        /* Content card styles */
+        .content-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Why Python section styles */
+        .why-python-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .why-python-item {
+            background-color: rgba(55, 118, 171, 0.1);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+            transition: transform 0.3s ease;
+            height: 100%;
+        }
+
+        .why-python-item:hover {
+            transform: scale(1.03);
+        }
+
+        .why-python-item h3 {
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            font-size: 1.3rem;
+        }
+
+        .why-python-item h3 i {
+            margin-right: 0.8rem;
+            font-size: 1.5rem;
+        }
+
+        .why-python-item p {
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        /* Salary section styles */
+        .salary-container {
+            overflow-x: auto;
+        }
+
+        .salary-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .salary-table th,
+        .salary-table td {
+            padding: 1.2rem;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 1.1rem;
+        }
+
+        .salary-table th {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .salary-table tr:nth-child(even) {
+            background-color: rgba(55, 118, 171, 0.05);
+        }
+
+        .salary-table tr:hover {
+            background-color: rgba(55, 118, 171, 0.1);
+        }
+
+        /* Scope section styles */
+        .scope-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .scope-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 1.8rem;
+            border-top: 4px solid var(--info);
+            transition: transform 0.3s ease;
+            height: 100%;
+        }
+
+        .scope-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .scope-card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .scope-card-header i {
+            font-size: 2.2rem;
+            margin-right: 1rem;
+            color: var(--info);
+        }
+
+        .scope-card-header h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .scope-card p {
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        /* Outcomes section styles */
+        .outcomes-list {
+            list-style: none;
+        }
+
+        .outcomes-list li {
+            margin-bottom: 1.2rem;
+            padding-left: 2.5rem;
+            position: relative;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .outcomes-list li:before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-size: 1.2rem;
+        }
+
+        /* Level up section styles */
+        .level-up-steps {
+            counter-reset: step-counter;
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .level-up-steps li {
+            position: relative;
+            padding: 1.2rem 1.2rem 1.2rem 3.5rem;
+            margin-bottom: 1.2rem;
+            background-color: rgba(40, 167, 69, 0.1);
+            border-radius: 8px;
+            counter-increment: step-counter;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .level-up-steps li:before {
+            content: counter(step-counter);
+            position: absolute;
+            left: -15px;
+            top: calc(50% - 18px);
+            width: 36px;
+            height: 36px;
+            background-color: var(--success);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* Meeting format section styles */
+        .meeting-format {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .format-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            border-left: 4px solid var(--warning);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .format-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .format-card h3 {
+            color: var(--dark);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            font-size: 1.3rem;
+        }
+
+        .format-card h3 i {
+            margin-right: 0.8rem;
+            color: var(--warning);
+            font-size: 1.5rem;
+        }
+
+        .format-card p {
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 2rem auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: var(--primary);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+            border-radius: 3px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border: 4px solid var(--primary);
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .timeline-left {
+            left: 0;
+        }
+
+        .timeline-right {
+            left: 50%;
+        }
+
+        .timeline-left::after {
+            right: -13px;
+        }
+
+        .timeline-right::after {
+            left: -13px;
+        }
+
+        .timeline-content {
+            padding: 15px;
+            background-color: white;
+            position: relative;
+            border-radius: 6px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .timeline-content::after {
+            content: '';
+            position: absolute;
+            border-width: 10px;
+            border-style: solid;
+            top: 15px;
+        }
+
+        .timeline-left .timeline-content::after {
+            border-color: transparent white transparent transparent;
+            right: 100%;
+        }
+
+        .timeline-right .timeline-content::after {
+            border-color: transparent transparent transparent white;
+            left: 100%;
+        }
+
+        .timeline-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-content p {
+            font-size: 1.1rem;
+        }
+
+        /* Footer styles */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 2rem 1.5rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-logo i {
+            margin-right: 0.8rem;
+            color: var(--secondary);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: white;
+            text-decoration: none;
+            margin: 0 1rem;
+            transition: color 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .footer-link:hover {
+            color: var(--secondary);
+        }
+
+        .footer-social {
+            margin: 1.5rem 0;
+        }
+
+        .social-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            margin: 0 0.5rem;
+            font-size: 1.4rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background-color: var(--secondary);
+            color: var(--dark);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            margin-top: 2rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1rem;
+        }
+
+        /* Animation for particles */
+        .particle {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100vw) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Page up button */
+        .page-up {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 99;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .page-up.visible {
+            opacity: 1;
+        }
+
+        .page-up:hover {
+            background-color: var(--secondary);
+            color: var(--dark);
+            transform: translateY(-5px);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .section {
+                padding-top: 60px;
+            }
+
+            .python-logo h1 {
+                font-size: 3rem;
+            }
+
+            .python-logo i {
+                font-size: 3rem;
+            }
+
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-wrap: wrap;
+                justify-content: flex-start;
+                padding: 0 10px;
+            }
+
+            .nav-item {
+                font-size: 0.9rem;
+                padding: 0.4rem 0.7rem;
+            }
+
+            .python-logo h1 {
+                font-size: 2.5rem;
+            }
+
+            .python-logo i {
+                font-size: 2.5rem;
+            }
+
+            .section-title h2 {
+                font-size: 1.5rem;
+            }
+
+            .timeline::after {
+                left: 31px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+
+            .timeline-item::after {
+                left: 18px;
+            }
+
+            .timeline-right {
+                left: 0%;
+            }
+
+            .timeline-left .timeline-content::after,
+            .timeline-right .timeline-content::after {
+                border-color: transparent white transparent transparent;
+                right: 100%;
+                left: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header id="home">
+        <div class="header-content animate__animated animate__fadeInDown">
+            <div class="python-logo">
+                <i class="fab fa-python"></i>
+                <h1>Python Training</h1>
+            </div>
+            <p class="academy-info">Itokyo Academy Pvt Ltd, Coimbatore</p>
+            <p class="instructor-info">Instructor: Abhinivesh, Senior Software Engineer</p>
+        </div>
+        <div class="header-particles" id="particles"></div>
+        <div class="scroll-indicator">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </header>
+
+    <nav>
+        <div class="nav-container">
+            <a href="#home" class="nav-item" id="nav-home">Home</a>
+            <a href="#why-python" class="nav-item" id="nav-why-python">Why Python</a>
+            <a href="#salary" class="nav-item" id="nav-salary">Salary</a>
+            <a href="#scope" class="nav-item" id="nav-scope">Career Scope</a>
+            <a href="#outcomes" class="nav-item" id="nav-outcomes">Outcomes</a>
+            <a href="#level-up" class="nav-item" id="nav-level-up">Level Up</a>
+            <a href="#format" class="nav-item" id="nav-format">Meeting Format</a>
+        </div>
+    </nav>
+
+    <section id="why-python" class="section">
+        <div class="section-container">
+            <div class="section-title">
+                <i class="fas fa-question-circle"></i>
+                <h2>Why Python?</h2>
+            </div>
+            <div class="content-card">
+                <div class="why-python-grid">
+                    <div class="why-python-item">
+                        <h3><i class="fas fa-feather"></i> Easy to Learn</h3>
+                        <p>Simple syntax similar to English, great for beginners and non-technical backgrounds.</p>
+                    </div>
+                    <div class="why-python-item">
+                        <h3><i class="fas fa-expand-arrows-alt"></i> Versatile</h3>
+                        <p>Used in web development, data science, AI, automation, game development, and more.</p>
+                    </div>
+                    <div class="why-python-item">
+                        <h3><i class="fas fa-chart-line"></i> High Demand</h3>
+                        <p>One of the most in-demand programming skills globally with steady growth.</p>
+                    </div>
+                    <div class="why-python-item">
+                        <h3><i class="fas fa-rocket"></i> Productivity</h3>
+                        <p>Do more with fewer lines of code compared to other languages.</p>
+                    </div>
+                    <div class="why-python-item">
+                        <h3><i class="fas fa-users"></i> Strong Community</h3>
+                        <p>Vast community support with extensive libraries and frameworks.</p>
+                    </div>
+                    <div class="why-python-item">
+                        <h3><i class="fas fa-briefcase"></i> Career Opportunities</h3>
+                        <p>Opens doors to diverse career paths in various industries.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="salary" class="section">
+        <div class="section-container">
+            <div class="section-title">
+                <i class="fas fa-money-bill-wave"></i>
+                <h2>Python Developers Salary Around the Globe</h2>
+            </div>
+            <div class="content-card">
+                <div class="salary-container">
+                    <table class="salary-table">
+                        <thead>
+                            <tr>
+                                <th>Country</th>
+                                <th>Entry Level</th>
+                                <th>Mid Level</th>
+                                <th>Senior Level</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>United States</td>
+                                <td>$70,000 - $90,000</td>
+                                <td>$100,000 - $130,000</td>
+                                <td>$140,000 - $180,000+</td>
+                            </tr>
+                            <tr>
+                                <td>United Kingdom</td>
+                                <td>£30,000 - £40,000</td>
+                                <td>£45,000 - £65,000</td>
+                                <td>£70,000 - £100,000+</td>
+                            </tr>
+                            <tr>
+                                <td>Germany</td>
+                                <td>€40,000 - €55,000</td>
+                                <td>€60,000 - €75,000</td>
+                                <td>€80,000 - €110,000+</td>
+                            </tr>
+                            <tr>
+                                <td>Australia</td>
+                                <td>AU$70,000 - AU$85,000</td>
+                                <td>AU$90,000 - AU$120,000</td>
+                                <td>AU$130,000 - AU$160,000+</td>
+                            </tr>
+                            <tr>
+                                <td>Canada</td>
+                                <td>CA$60,000 - CA$75,000</td>
+                                <td>CA$80,000 - CA$110,000</td>
+                                <td>CA$120,000 - CA$150,000+</td>
+                            </tr>
+                            <tr>
+                                <td>India</td>
+                                <td>₹3,50,000 - ₹6,00,000</td>
+                                <td>₹8,00,000 - ₹15,00,000</td>
+                                <td>₹18,00,000 - ₹30,00,000+</td>
+                            </tr>
+                            <tr>
+                                <td>Singapore</td>
+                                <td>S$40,000 - S$60,000</td>
+                                <td>S$70,000 - S$100,000</td>
+                                <td>S$110,000 - S$180,000+</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p><em>Note: Salaries vary based on company size, location, additional skills, and experience.</em></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="scope" class="section">
+        <div class="section-container">
+            <div class="section-title">
+                <i class="fas fa-globe"></i>
+                <h2>Scope for Python Developers</h2>
+            </div>
+            <div class="content-card">
+                <div class="scope-cards">
+                    <div class="scope-card">
+                        <div class="scope-card-header">
+                            <i class="fas fa-database"></i>
+                            <h3>Data Science</h3>
+                        </div>
+                        <p>Analyze and interpret complex data with Python's powerful libraries like Pandas, NumPy, and Matplotlib.</p>
+                    </div>
+                    <div class="scope-card">
+                        <div class="scope-card-header">
+                            <i class="fas fa-robot"></i>
+                            <h3>Machine Learning & AI</h3>
+                        </div>
+                        <p>Build intelligent systems and algorithms using TensorFlow, PyTorch, and scikit-learn.</p>
+                    </div>
+                    <div class="scope-card">
+                        <div class="scope-card-header">
+                            <i class="fas fa-server"></i>
+                            <h3>Backend Development</h3>
+                        </div>
+                        <p>Create robust web applications with frameworks like Django and Flask.</p>
+                    </div>
+                    <div class="scope-card">
+                        <div class="scope-card-header">
+                            <i class="fas fa-cogs"></i>
+                            <h3>Automation</h3>
+                        </div>
+                        <p>Streamline repetitive tasks and processes across various domains.</p>
+                    </div>
+                    <div class="scope-card">
+                        <div class="scope-card-header">
+                            <i class="fas fa-shield-alt"></i>
+                            <h3>Cybersecurity</h3>
+                        </div>
+                        <p>Develop security tools and scripts for penetration testing and system hardening.</p>
+                    </div>
+                    <div class="scope-card">
+                        <div class="scope-card-header">
+                            <i class="fas fa-microchip"></i>
+                            <h3>Internet of Things</h3>
+                        </div>
+                        <p>Program IoT devices and create systems that connect the physical and digital worlds.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="outcomes" class="section">
+        <div class="section-container">
+            <div class="section-title">
+                <i class="fas fa-graduation-cap"></i>
+                <h2>What Students Should Get After This Training</h2>
+            </div>
+            <div class="content-card">
+                <ul class="outcomes-list">
+                    <li><strong>Solid Python Foundation:</strong> Master core Python concepts and syntax that form the basis of all Python applications.</li>
+                    <li><strong>Problem-Solving Skills:</strong> Develop the ability to break down complex problems and implement efficient solutions.</li>
+                    <li><strong>Coding Proficiency:</strong> Write clean, maintainable, and efficient Python code following best practices.</li>
+                    <li><strong>Project Portfolio:</strong> Build multiple projects that demonstrate your skills to potential employers.</li>
+                    <li><strong>Self-Learning Ability:</strong> Gain the confidence and knowledge to continue learning advanced topics independently.</li>
+                    <li><strong>Career Readiness:</strong> Prepare for entry-level Python developer positions or further specialization.</li>
+                    <li><strong>Community Connections:</strong> Network with fellow learners and build relationships in the Python community.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="level-up" class="section">
+        <div class="section-container">
+            <div class="section-title">
+                <i class="fas fa-level-up-alt"></i>
+                <h2>How Students Should Use This Training to Level Up Their Skills</h2>
+            </div>
+            <div class="content-card">
+                <ol class="level-up-steps">
+                    <li><strong>Consistent Practice:</strong> Code daily, even if just for 30 minutes. Consistency builds muscle memory and reinforces concepts.</li>
+                    <li><strong>Build Projects:</strong> Apply what you learn by creating personal projects. Start simple and gradually increase complexity.</li>
+                    <li><strong>Solve Coding Challenges:</strong> Practice on platforms like LeetCode, HackerRank, or Codewars to sharpen problem-solving skills.</li>
+                    <li><strong>Contribute to Open Source:</strong> Find beginner-friendly open source projects to contribute to and learn from experienced developers.</li>
+                    <li><strong>Join Communities:</strong> Participate in Python forums, Discord servers, or local meetups to learn from others and stay motivated.</li>
+                    <li><strong>Teach Others:</strong> Explaining concepts to others solidifies your understanding and identifies knowledge gaps.</li>
+                    <li><strong>Specialize Gradually:</strong> After mastering the fundamentals, begin exploring specialized areas that interest you most.</li>
+                </ol>
+            </div>
+        </div>
+    </section>
+    
+    <section id="format" class="section">
+        <div class="section-container">
+            <div class="section-title">
+                <i class="fas fa-calendar-alt"></i>
+                <h2>Daily Meeting Format</h2>
+            </div>
+            <div class="content-card">
+                <p>Each session is carefully structured to maximize learning in our 40-minute time frame:</p>
+                <div class="meeting-format">
+                    <div class="format-card">
+                        <h3><i class="fas fa-redo"></i> Quick Recap</h3>
+                        <p>5 minutes to review key points from the previous session and address any questions.</p>
+                    </div>
+                    <div class="format-card">
+                        <h3><i class="fas fa-chalkboard-teacher"></i> Concept Introduction</h3>
+                        <p>15 minutes of new content with clear explanations and relevant examples.</p>
+                    </div>
+                    <div class="format-card">
+                        <h3><i class="fas fa-laptop-code"></i> Live Coding</h3>
+                        <p>10 minutes of hands-on practice where we code together and apply new concepts.</p>
+                    </div>
+                    <div class="format-card">
+                        <h3><i class="fas fa-tasks"></i> Assignments & Q&A</h3>
+                        <p>10 minutes to explain assignments and address any remaining questions.</p>
+                    </div>
+                </div>
+                <div class="timeline">
+                    <div class="timeline-item timeline-left">
+                        <div class="timeline-content">
+                            <h3>Weekend Sessions</h3>
+                            <p>Saturday & Sunday, 6:30 AM - 7:30 AM via Zoom</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item timeline-right">
+                        <div class="timeline-content">
+                            <h3>Doubt Clearing</h3>
+                            <p>Additional offline doubt-clearing sessions available on Saturdays</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item timeline-left">
+                        <div class="timeline-content">
+                            <h3>Practice Time</h3>
+                            <p>Daily practice assignments to strengthen concepts</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item timeline-right">
+                        <div class="timeline-content">
+                            <h3>Assessments</h3>
+                            <p>Regular quizzes and coding challenges to track progress</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <i class="fab fa-python"></i>
+                <span>Itokyo Academy Pvt Ltd</span>
+            </div>
+            <p>Empowering students with practical Python skills since 2023</p>
+            <div class="footer-links">
+                <a href="#" class="footer-link">Home</a>
+                <a href="#" class="footer-link">About Us</a>
+                <a href="#" class="footer-link">Courses</a>
+                <a href="#" class="footer-link">Contact</a>
+                <a href="#" class="footer-link">FAQ</a>
+            </div>
+            <div class="footer-social">
+                <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-linkedin"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+            </div>
+            <div class="copyright">
+                &copy; 2025 Itokyo Academy. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <div class="page-up" id="pageUp">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script>
+        // Create particles for the header
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const numberOfParticles = 20;
+            
+            for (let i = 0; i < numberOfParticles; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random size between 5px and 15px
+                const size = Math.random() * 10 + 5;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Random position
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                particle.style.left = `${posX}%`;
+                particle.style.top = `${posY}%`;
+                
+                // Random animation duration
+                const duration = Math.random() * 15 + 10;
+                particle.style.animationDuration = `${duration}s`;
+                
+                // Random animation delay
+                const delay = Math.random() * 5;
+                particle.style.animationDelay = `${delay}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Reveal sections as they come into view
+        function revealSections() {
+            const sections = document.querySelectorAll('.section');
+            const windowHeight = window.innerHeight;
+            
+            sections.forEach((section) => {
+                const sectionTop = section.getBoundingClientRect().top;
+                if (sectionTop < windowHeight - 100) {
+                    section.classList.add('active');
+                }
+            });
+        }
+        
+        // Update active nav item based on scroll position
+        function updateActiveNavItem() {
+            const sections = document.querySelectorAll('.section, header');
+            const navItems = document.querySelectorAll('.nav-item');
+            
+            let currentSectionId = '';
+            
+            sections.forEach((section) => {
+                const sectionTop = section.getBoundingClientRect().top;
+                if (sectionTop < window.innerHeight / 2) {
+                    currentSectionId = section.id;
+                }
+            });
+            
+            // Handle the header case specifically
+            if (document.querySelector('header').getBoundingClientRect().bottom > 0) {
+                currentSectionId = 'home';
+            }
+            
+            navItems.forEach((item) => {
+                item.classList.remove('active');
+                if (item.getAttribute('href') === `#${currentSectionId}`) {
+                    item.classList.add('active');
+                }
+            });
+            
+            // Show/hide page up button
+            const pageUp = document.getElementById('pageUp');
+            if (window.scrollY > window.innerHeight / 2) {
+                pageUp.classList.add('visible');
+            } else {
+                pageUp.classList.remove('visible');
+            }
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            revealSections();
+            updateActiveNavItem();
+            
+            // Reveal sections on scroll
+            window.addEventListener('scroll', function() {
+                revealSections();
+                updateActiveNavItem();
+            });
+            
+            // Smooth scroll for navigation
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        window.scrollTo({
+                            top: target.offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Page up button
+            document.getElementById('pageUp').addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
