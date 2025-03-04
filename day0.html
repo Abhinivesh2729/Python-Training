@@ -30,6 +30,7 @@
             background-color: var(--light);
             color: var(--dark);
             overflow-x: hidden;
+            width: 100%;
         }
 
         /* Full viewport sections */
@@ -104,6 +105,8 @@
             position: relative;
             z-index: 2;
             max-width: 800px;
+            width: 100%;
+            padding: 0 15px;
         }
 
         .python-logo {
@@ -111,6 +114,7 @@
             align-items: center;
             justify-content: center;
             margin-bottom: 2rem;
+            flex-wrap: wrap;
         }
 
         .python-logo i {
@@ -176,14 +180,27 @@
             left: 0;
             right: 0;
             z-index: 100;
+            width: 100%;
         }
 
         .nav-container {
             display: flex;
             justify-content: center;
-            gap: 1.5rem;
+            flex-wrap: wrap;
+            gap: 0.8rem;
             max-width: 1200px;
             margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 101;
         }
 
         .nav-item {
@@ -194,6 +211,7 @@
             padding: 0.5rem 1rem;
             border-radius: 4px;
             transition: all 0.3s ease;
+            white-space: nowrap;
         }
 
         .nav-item:hover, .nav-item.active {
@@ -208,6 +226,7 @@
             margin-bottom: 2rem;
             border-bottom: 3px solid var(--primary);
             padding-bottom: 0.8rem;
+            flex-wrap: wrap;
         }
 
         .section-title i {
@@ -219,6 +238,7 @@
         .section-title h2 {
             font-size: 2.2rem;
             font-weight: 600;
+            line-height: 1.2;
         }
 
         /* Content card styles */
@@ -233,6 +253,7 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            width: 100%;
         }
 
         .content-card:hover {
@@ -266,6 +287,7 @@
             display: flex;
             align-items: center;
             font-size: 1.3rem;
+            flex-wrap: wrap;
         }
 
         .why-python-item h3 i {
@@ -281,12 +303,15 @@
         /* Salary section styles */
         .salary-container {
             overflow-x: auto;
+            width: 100%;
+            -webkit-overflow-scrolling: touch;
         }
 
         .salary-table {
             width: 100%;
             border-collapse: collapse;
             margin: 1rem 0;
+            min-width: 700px; /* Ensures table doesn't get too compressed */
         }
 
         .salary-table th,
@@ -313,7 +338,7 @@
         /* Scope section styles */
         .scope-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 1.5rem;
         }
 
@@ -335,6 +360,7 @@
             display: flex;
             align-items: center;
             margin-bottom: 1rem;
+            flex-wrap: wrap;
         }
 
         .scope-card-header i {
@@ -356,6 +382,7 @@
         /* Outcomes section styles */
         .outcomes-list {
             list-style: none;
+            padding-left: 0.5rem;
         }
 
         .outcomes-list li {
@@ -440,6 +467,7 @@
             display: flex;
             align-items: center;
             font-size: 1.3rem;
+            flex-wrap: wrap;
         }
 
         .format-card h3 i {
@@ -547,6 +575,7 @@
             color: white;
             padding: 2rem 1.5rem;
             text-align: center;
+            width: 100%;
         }
 
         .footer-content {
@@ -561,6 +590,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-wrap: wrap;
         }
 
         .footer-logo i {
@@ -573,12 +603,13 @@
             justify-content: center;
             margin: 1.5rem 0;
             flex-wrap: wrap;
+            gap: 1rem;
         }
 
         .footer-link {
             color: white;
             text-decoration: none;
-            margin: 0 1rem;
+            margin: 0 0.5rem;
             transition: color 0.3s ease;
             font-size: 1.1rem;
         }
@@ -589,6 +620,10 @@
 
         .footer-social {
             margin: 1.5rem 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
         }
 
         .social-icon {
@@ -673,10 +708,30 @@
             transform: translateY(-5px);
         }
 
-        /* Responsive adjustments */
+        /* Improved Responsive adjustments */
+        @media (max-width: 1024px) {
+            .python-logo h1 {
+                font-size: 3.5rem;
+            }
+            
+            .python-logo i {
+                font-size: 3.5rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .content-card {
+                padding: 1.5rem;
+            }
+        }
+
         @media (max-width: 992px) {
             .section {
                 padding-top: 60px;
+                padding-left: 15px;
+                padding-right: 15px;
             }
 
             .python-logo h1 {
@@ -690,18 +745,41 @@
             .section-title h2 {
                 font-size: 1.8rem;
             }
+            
+            .academy-info, .instructor-info {
+                font-size: 1.2rem;
+            }
+            
+            .nav-container {
+                justify-content: space-between;
+            }
         }
 
         @media (max-width: 768px) {
-            .nav-container {
-                flex-wrap: wrap;
-                justify-content: flex-start;
-                padding: 0 10px;
+            .menu-toggle {
+                display: block;
+                position: absolute;
+                top: 15px;
+                right: 15px;
             }
-
+            
+            .nav-container {
+                flex-direction: column;
+                align-items: center;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+                padding-top: 50px;
+            }
+            
+            .nav-container.active {
+                max-height: 350px;
+            }
+            
             .nav-item {
-                font-size: 0.9rem;
-                padding: 0.4rem 0.7rem;
+                width: 100%;
+                text-align: center;
+                padding: 0.8rem;
             }
 
             .python-logo h1 {
@@ -711,9 +789,26 @@
             .python-logo i {
                 font-size: 2.5rem;
             }
+            
+            .header-content {
+                padding: 0 10px;
+            }
+
+            .section-title {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .section-title i {
+                margin-bottom: 0.5rem;
+            }
 
             .section-title h2 {
                 font-size: 1.5rem;
+            }
+            
+            .content-card {
+                padding: 1.2rem;
             }
 
             .timeline::after {
@@ -740,6 +835,78 @@
                 right: 100%;
                 left: auto;
             }
+            
+            .level-up-steps li:before {
+                left: -10px;
+                width: 30px;
+                height: 30px;
+                font-size: 1rem;
+            }
+            
+            .format-card, .scope-card, .why-python-item {
+                padding: 1rem;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .footer-social {
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .python-logo {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .python-logo h1 {
+                font-size: 2rem;
+            }
+
+            .python-logo i {
+                font-size: 2.5rem;
+                margin-right: 0;
+            }
+            
+            .academy-info {
+                font-size: 1rem;
+            }
+            
+            .instructor-info {
+                font-size: 0.9rem;
+            }
+            
+            .section {
+                padding: 70px 10px 30px;
+            }
+            
+            .section-title h2 {
+                font-size: 1.3rem;
+            }
+            
+            .content-card {
+                padding: 1rem;
+            }
+            
+            .why-python-item h3, .scope-card-header h3, .format-card h3 {
+                font-size: 1.1rem;
+            }
+            
+            .why-python-item p, .scope-card p, .format-card p, 
+            .outcomes-list li, .level-up-steps li {
+                font-size: 0.95rem;
+            }
+            
+            .page-up {
+                bottom: 15px;
+                right: 15px;
+                width: 40px;
+                height: 40px;
+            }
         }
     </style>
 </head>
@@ -760,7 +927,10 @@
     </header>
 
     <nav>
-        <div class="nav-container">
+        <button class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="nav-container" id="navContainer">
             <a href="#home" class="nav-item" id="nav-home">Home</a>
             <a href="#why-python" class="nav-item" id="nav-why-python">Why Python</a>
             <a href="#salary" class="nav-item" id="nav-salary">Salary</a>
@@ -1138,11 +1308,28 @@
             }
         }
         
+        // Toggle mobile menu
+        function toggleMobileMenu() {
+            const navContainer = document.getElementById('navContainer');
+            navContainer.classList.toggle('active');
+            
+            // Close menu when a navigation item is clicked
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    navContainer.classList.remove('active');
+                });
+            });
+        }
+        
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             createParticles();
             revealSections();
             updateActiveNavItem();
+            
+            // Mobile menu toggle
+            document.getElementById('menuToggle').addEventListener('click', toggleMobileMenu);
             
             // Reveal sections on scroll
             window.addEventListener('scroll', function() {
@@ -1171,5 +1358,14 @@
                     behavior: 'smooth'
                 });
             });
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    document.getElementById('navContainer').classList.remove('active');
+                }
+            });
         });
     </script>
+</body>
+</html>
