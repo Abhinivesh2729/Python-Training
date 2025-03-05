@@ -1,0 +1,1729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Training - Day 2 | Itokyo Academy</title>
+    <meta name="description" content="Learn Python basics including history, installation, interpreter usage, and your first Hello World program. Designed for beginners with no programming background.">
+    <meta name="keywords" content="Python training, Python history, Python installation, Python interpreter, IDLE, Python for beginners, Hello World Python, Python basics, Python tutorial, Itokyo Academy, Python compiler vs interpreter">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #3776ab;
+            --secondary: #ffd43b;
+            --dark: #1a1a1a;
+            --light: #f8f9fa;
+            --success: #28a745;
+            --info: #17a2b8;
+            --warning: #ffc107;
+            --danger: #dc3545;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        /* Full viewport sections */
+        .section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 80px 20px 40px; /* Adjusted to account for fixed navbar */
+            position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+            scroll-margin-top: 60px; /* Ensures navbar doesn't cover section when scrolling to it */
+        }
+
+        .section.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Gradient backgrounds for alternating sections */
+        #history {
+            background: linear-gradient(135deg, #f6f9fc 0%, #e9f2fb 100%);
+        }
+
+        #installation {
+            background: linear-gradient(135deg, #edf7ff 0%, #deedf9 100%);
+        }
+
+        #interpreter {
+            background: linear-gradient(135deg, #f6f9fc 0%, #e9f2fb 100%);
+        }
+
+        #idle {
+            background: linear-gradient(135deg, #edf7ff 0%, #deedf9 100%);
+        }
+
+        #online-compiler {
+            background: linear-gradient(135deg, #f6f9fc 0%, #e9f2fb 100%);
+        }
+
+        #python-modes {
+            background: linear-gradient(135deg, #edf7ff 0%, #deedf9 100%);
+        }
+
+        #hello-world {
+            background: linear-gradient(135deg, #f6f9fc 0%, #e9f2fb 100%);
+        }
+
+        /* Header styles */
+        header {
+            height: 100vh;
+            background: linear-gradient(135deg, var(--primary) 0%, #2d5f8b 100%);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            width: 100%;
+            padding: 0 15px;
+        }
+
+        .python-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .python-logo i {
+            font-size: 4rem;
+            margin-right: 1rem;
+            color: var(--secondary);
+        }
+
+        .python-logo h1 {
+            font-size: 4rem;
+            font-weight: 700;
+        }
+
+        .day-label {
+            background-color: var(--secondary);
+            color: var(--dark);
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .header-subtitle {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .academy-info {
+            margin-top: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .instructor-info {
+            font-style: italic;
+            margin-top: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .header-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            color: white;
+            font-size: 2rem;
+            z-index: 2;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0) translateX(-50%);
+            }
+            40% {
+                transform: translateY(-20px) translateX(-50%);
+            }
+            60% {
+                transform: translateY(-10px) translateX(-50%);
+            }
+        }
+
+        /* Navigation styles */
+        nav {
+            background-color: var(--dark);
+            padding: 0.8rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            width: 100%;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 101;
+        }
+
+        .nav-item {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Section title styles */
+        .section-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .section-title i {
+            font-size: 2.2rem;
+            margin-right: 1rem;
+            color: var(--primary);
+        }
+
+        .section-title h2 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        /* Content card styles */
+        .content-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Timeline styles */
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 2rem auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: var(--primary);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+            border-radius: 3px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border: 4px solid var(--primary);
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .timeline-left {
+            left: 0;
+        }
+
+        .timeline-right {
+            left: 50%;
+        }
+
+        .timeline-left::after {
+            right: -13px;
+        }
+
+        .timeline-right::after {
+            left: -13px;
+        }
+
+        .timeline-content {
+            padding: 15px;
+            background-color: white;
+            position: relative;
+            border-radius: 6px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .timeline-content::after {
+            content: '';
+            position: absolute;
+            border-width: 10px;
+            border-style: solid;
+            top: 15px;
+        }
+
+        .timeline-left .timeline-content::after {
+            border-color: transparent white transparent transparent;
+            right: 100%;
+        }
+
+        .timeline-right .timeline-content::after {
+            border-color: transparent transparent transparent white;
+            left: 100%;
+        }
+
+        .timeline-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-content p {
+            font-size: 1.1rem;
+        }
+
+        /* Code display */
+        .code-block {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            border-radius: 6px;
+            padding: 1.2rem;
+            margin: 1rem 0;
+            font-family: 'Consolas', 'Monaco', monospace;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .code-block pre {
+            margin: 0;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .code-block-header {
+            background-color: #1a1a1a;
+            padding: 0.5rem 1rem;
+            color: white;
+            border-radius: 6px 6px 0 0;
+            font-weight: 500;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .code-block-content {
+            padding: 1rem;
+        }
+
+        .copy-btn {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .copy-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Steps list */
+        .steps-list {
+            counter-reset: step-counter;
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .steps-list li {
+            position: relative;
+            padding: 1.2rem 1.2rem 1.2rem 3.5rem;
+            margin-bottom: 1.2rem;
+            background-color: rgba(23, 162, 184, 0.1);
+            border-radius: 8px;
+            counter-increment: step-counter;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .steps-list li:before {
+            content: counter(step-counter);
+            position: absolute;
+            left: -15px;
+            top: calc(50% - 18px);
+            width: 36px;
+            height: 36px;
+            background-color: var(--info);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* Key points list */
+        .key-points {
+            list-style: none;
+            padding-left: 0.5rem;
+        }
+
+        .key-points li {
+            margin-bottom: 1.2rem;
+            padding-left: 2.5rem;
+            position: relative;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .key-points li:before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-size: 1.2rem;
+        }
+
+        /* Comparison table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1.2rem;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 1.1rem;
+        }
+
+        .comparison-table th {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background-color: rgba(55, 118, 171, 0.05);
+        }
+
+        .comparison-table tr:hover {
+            background-color: rgba(55, 118, 171, 0.1);
+        }
+
+        /* Info boxes */
+        .info-box {
+            background-color: rgba(23, 162, 184, 0.1);
+            border-left: 4px solid var(--info);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .warning-box {
+            background-color: rgba(255, 193, 7, 0.1);
+            border-left: 4px solid var(--warning);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .tip-box {
+            background-color: rgba(40, 167, 69, 0.1);
+            border-left: 4px solid var(--success);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 6px 6px 0;
+        }
+
+        /* Two-column layout */
+        .two-columns {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Image container */
+        .image-container {
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-caption {
+            margin-top: 0.8rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* Feature cards */
+        .feature-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .feature-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            border-top: 4px solid var(--primary);
+            transition: transform 0.3s ease;
+            height: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .feature-card-header i {
+            font-size: 2rem;
+            margin-right: 1rem;
+            color: var(--primary);
+        }
+
+        .feature-card-header h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .feature-card p {
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        /* Footer styles */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            width: 100%;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .footer-logo i {
+            margin-right: 0.8rem;
+            color: var(--secondary);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-link {
+            color: white;
+            text-decoration: none;
+            margin: 0 0.5rem;
+            transition: color 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .footer-link:hover {
+            color: var(--secondary);
+        }
+
+        .footer-social {
+            margin: 1.5rem 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .social-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            margin: 0 0.5rem;
+            font-size: 1.4rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background-color: var(--secondary);
+            color: var(--dark);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            margin-top: 2rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1rem;
+        }
+
+        /* Animation for particles */
+        .particle {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100vw) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Page up button */
+        .page-up {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 99;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .page-up.visible {
+            opacity: 1;
+        }
+
+        .page-up:hover {
+            background-color: var(--secondary);
+            color: var(--dark);
+            transform: translateY(-5px);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .python-logo h1 {
+                font-size: 3.5rem;
+            }
+            
+            .python-logo i {
+                font-size: 3.5rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .content-card {
+                padding: 1.5rem;
+            }
+
+            .two-columns {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .section {
+                padding-top: 60px;
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+
+            .python-logo h1 {
+                font-size: 3rem;
+            }
+
+            .python-logo i {
+                font-size: 3rem;
+            }
+
+            .header-subtitle {
+                font-size: 1.8rem;
+            }
+
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+            
+            .academy-info, .instructor-info {
+                font-size: 1.2rem;
+            }
+            
+            .nav-container {
+                justify-content: space-between;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+                position: absolute;
+                top: 15px;
+                right: 15px;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+                align-items: center;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+                padding-top: 50px;
+            }
+            
+            .nav-container.active {
+                max-height: 500px;
+            }
+            
+            .nav-item {
+                width: 100%;
+                text-align: center;
+                padding: 0.8rem;
+            }
+
+            .python-logo h1 {
+                font-size: 2.5rem;
+            }
+
+            .python-logo i {
+                font-size: 2.5rem;
+            }
+            
+            .header-subtitle {
+                font-size: 1.5rem;
+            }
+            
+            .header-content {
+                padding: 0 10px;
+            }
+
+            .section-title {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .section-title i {
+                margin-bottom: 0.5rem;
+            }
+
+            .section-title h2 {
+                font-size: 1.5rem;
+            }
+            
+            .content-card {
+                padding: 1.2rem;
+            }
+
+            .timeline::after {
+                left: 31px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+
+            .timeline-item::after {
+                left: 18px;
+            }
+
+            .timeline-right {
+                left: 0%;
+            }
+
+            .timeline-left .timeline-content::after,
+            .timeline-right .timeline-content::after {
+                border-color: transparent white transparent transparent;
+                right: 100%;
+                left: auto;
+            }
+            
+            .steps-list li:before {
+                left: -10px;
+                width: 30px;
+                height: 30px;
+                font-size: 1rem;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .footer-social {
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .python-logo {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .python-logo h1 {
+                font-size: 2rem;
+            }
+
+            .python-logo i {
+                font-size: 2.5rem;
+                margin-right: 0;
+            }
+            
+            .day-label {
+                font-size: 1.2rem;
+            }
+            
+            .header-subtitle {
+                font-size: 1.3rem;
+            }
+            
+            .academy-info {
+                font-size: 1rem;
+            }
+            
+            .instructor-info {
+                font-size: 0.9rem;
+            }
+            
+            .section {
+                padding: 70px 10px 30px;
+            }
+            
+            .section-title h2 {
+                font-size: 1.3rem;
+            }
+            
+            .content-card {
+                padding: 1rem;
+            }
+            
+            .page-up {
+                bottom: 15px;
+                right: 15px;
+                width: 40px;
+                height: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header id="home">
+        <div class="header-content animate__animated animate__fadeInDown">
+            <div class="python-logo">
+                <i class="fab fa-python"></i>
+                <h1>Python Training</h1>
+            </div>
+            <span class="day-label">Day 2</span>
+            <h2 class="header-subtitle">History, Installation & Getting Started</h2>
+            <p class="academy-info">Itokyo Academy Pvt Ltd, Coimbatore</p>
+            <p class="instructor-info">Instructor: Abhinivesh, Senior Software Engineer</p>
+        </div>
+        <div class="header-particles" id="particles"></div>
+        <div class="scroll-indicator">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </header>
+
+    <nav>
+        <button class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="nav-container" id="navContainer">
+            <a href="#home" class="nav-item" id="nav-home">Home</a>
+            <a href="#history" class="nav-item" id="nav-history">History</a>
+            <a href="#installation" class="nav-item" id="nav-installation">Installation</a>
+            <a href="#interpreter" class="nav-item" id="nav-interpreter">Interpreter</a>
+            <a href="#idle" class="nav-item" id="nav-idle">IDLE</a>
+            <a href="#online-compiler" class="nav-item" id="nav-online-compiler">Online Compiler</a>
+            <a href="#python-modes" class="nav-item" id="nav-python-modes">Python Modes</a>
+            <a href="#hello-world" class="nav-item" id="nav-hello-world">Hello World</a>
+        </div>
+    </nav>
+
+    <section id="history" class="section">
+        <div class="section-container">
+            <div class="section-title">
+                <i class="fas fa-history"></i>
+                <h2>Python's History and Evolution</h2>
+            </div>
+            <div class="content-card">
+                <p>Python was created by Guido van Rossum in the late 1980s and was first released in 1991. The name "Python" was inspired by the British comedy group Monty Python, not the snake!</p>
+                
+                <div class="timeline">
+                    <div class="timeline-item timeline-left">
+                        <div class="timeline-content">
+                            <h3>1989</h3>
+                            <p>Guido van Rossum begins working on Python as a hobby project during Christmas holidays.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item timeline-right">
+                        <div class="timeline-content">
+                            <h3>1991</h3>
+                            <p>Python 0.9.0 is released, the first public release.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item timeline-left">
+                        <div class="timeline-content">
+                            <h3>2000</h3>
+                            <p>Python 2.0 is released with new features like list comprehensions and garbage collection.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item timeline-right">
+                        <div class="timeline-content">
+                            <h3>2008</h3>
+                            <p>Python 3.0 is released with a focus on removing duplicate features and improving consistency.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item timeline-left">
+                        <div class="timeline-content">
+                            <h3>2019</h3>
+                            <p>Python 2 reaches end of life, with Python 3 becoming the standard.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item timeline-right">
+                        <div class="timeline-content">
+                            <h3>2020-Present</h3>
+                            <p>Python becomes one of the most popular programming languages with wide adoption in data science, AI, web development and automation.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="info-box">
+                    <h3><i class="fas fa-lightbulb"></i> Python Philosophy</h3>
+                    <p>Python's design philosophy emphasizes code readability with its notable use of significant whitespace. Its core principles are summarized in "The Zen of Python" by Tim Peters, which can be viewed by typing <code>import this</code> in Python.</p>
+                </div>
+                
+                <h3>Key Features of Python:</h3>
+                <ul class="key-points">
+                    <li><strong>Simplicity:</strong> Easy-to-read syntax that resembles English</li>
+                    <li><strong>Versatility:</strong> Used in web development, data analysis, AI, automation, and more</li>
+                    <li><strong>Interpreted:</strong> No compilation needed, making development faster</li>
+                    <li><strong>Dynamically Typed:</strong> No need to declare variable types</li>
+                    <li><strong>Large Standard Library:</strong> "Batteries included" philosophy with many built-in modules</li>
+                    <li><strong>Strong Community:</strong> Extensive documentation and third-party packages</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="installation" class="section">
+        <div class="section-container">
+            <div class="section-title">
+                <i class="fas fa-download"></i>
+                <h2>How to Run Python: Installation Guide</h2>
+            </div>
+            <div class="content-card">
+                <p>Before we can start writing Python code, we need to install Python on our computer. Python is freely available for all major operating systems (Windows, macOS, Linux).</p>
+                
+                <h3>System Requirements:</h3>
+                <ul>
+                    <li>Windows 7 or later</li>
+                    <li>macOS 10.11 or later</li>
+                    <li>Almost any modern Linux distribution</li>
+                    <li>At least 100 MB of disk space</li>
+                </ul>
+                
+                <div class="steps-list">
+                    <li>
+                        <strong>Download Python:</strong> Visit <a href="https://www.python.org/downloads/" target="_blank">python.org/downloads</a> and download the latest version for your operating system (Python 3.11+ recommended).
+                    </li>
+                    <li>
+                        <strong>Run the Installer:</strong> Double-click the downloaded file to start the installation process.
+                    </li>
+                    <li>
+                        <strong>Important Options:</strong> On Windows, check "Add Python to PATH" before clicking "Install Now" to ensure Python can be run from the command line.
+                    </li>
+                    <li>
+                        <strong>Verify Installation:</strong> Open a command prompt (Windows) or terminal (macOS/Linux) and type <code>python --version</code> or <code>python3 --version</code> to confirm Python was installed successfully.
+                    </li>
+                </div>
+                
+                <div class="warning-box">
+                    <h3><i class="fas fa-exclamation-triangle"></i> Important Note for Windows Users</h3>
+                    <p>Make sure to check the "Add Python to PATH" option during installation! This allows you to run Python from any Command Prompt window.</p>
+                    <img src="/api/placeholder/600/250" alt="Python installer with Add to PATH option highlighted" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="interpreter" class="section">
+        <div class="section-container">
+            <div class="section-title">
+                <i class="fas fa-terminal"></i>
+                <h2>Understanding the Python Interpreter</h2>
+            </div>
+            <div class="content-card">
+                <h3>How Python Code Works in a Computer</h3>
+                <p>Understanding how Python works "under the hood" is essential for every Python developer. Let's explore the workflow from writing code to execution:</p>
+                
+                <div class="feature-cards">
+                    <div class="feature-card">
+                        <div class="feature-card-header">
+                            <i class="fas fa-edit"></i>
+                            <h3>Step 1: Writing Code</h3>
+                        </div>
+                        <p>You write Python code in a text file with a <code>.py</code> extension using any text editor or IDE (Integrated Development Environment).</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-card-header">
+                            <i class="fas fa-cogs"></i>
+                            <h3>Step 2: Python Interpreter</h3>
+                        </div>
+                        <p>The Python interpreter reads your code and converts it into an intermediate language called "bytecode" (files with <code>.pyc</code> extension).</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-card-header">
+                            <i class="fas fa-microchip"></i>
+                            <h3>Step 3: Python Virtual Machine</h3>
+                        </div>
+                        <p>The Python Virtual Machine (PVM) executes the bytecode instruction by instruction, converting it into machine code that your computer understands.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-card-header">
+                            <i class="fas fa-desktop"></i>
+                            <h3>Step 4: Output</h3>
+                        </div>
+                        <p>The results of your code are displayed as output on the screen or saved to files, depending on your program's purpose.</p>
+                    </div>
+                </div>
+                
+                <h3>What is an Interpreter?</h3>
+                <p>An interpreter is a program that directly executes code written in a programming language without requiring it to be compiled into machine language first. The Python interpreter translates and runs your code line by line.</p>
+                
+                <div class="info-box">
+                    <h3><i class="fas fa-info-circle"></i> For Non-Programmers</h3>
+                    <p>Think of the interpreter as a translator who reads your instructions (code) in Python and translates them into a language the computer understands, executing each instruction immediately before moving to the next one.</p>
+                </div>
+                
+                <h3>Interpreter vs. Compiler: Key Differences</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Interpreter (Python)</th>
+                            <th>Compiler (C, Java)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Execution</td>
+                            <td>Line-by-line execution</td>
+                            <td>Converts entire program to machine code before execution</td>
+                        </tr>
+                        <tr>
+                            <td>Speed</td>
+                            <td>Generally slower execution</td>
+                            <td>Faster execution</td>
+                        </tr>
+                        <tr>
+                            <td>Development</td>
+                            <td>Faster development cycle</td>
+                            <td>More time-consuming development cycle</td>
+                        </tr>
+                        <tr>
+                            <td>Error Detection</td>
+                            <td>Stops at first error</td>
+                            <td>Shows all errors at once after compilation</td>
+                        </tr>
+                        <tr>
+                            <td>Memory Usage</td>
+                            <td>Often uses more memory</td>
+                            <td>Usually more memory-efficient</td>
+                        </tr>
+                        <tr>
+                            <td>Portability</td>
+                            <td>Highly portable ("Write once, run anywhere")</td>
+                            <td>May need recompilation for different platforms</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section id="idle" class="section">
+        <div class="section-container">
+            <div class="section-title">
+                <i class="fas fa-laptop-code"></i>
+                <h2>IDLE: Python's Integrated Development Environment</h2>
+            </div>
+            <div class="content-card">
+                <h3>What is IDLE?</h3>
+                <p>IDLE (Integrated Development and Learning Environment) is Python's built-in, basic IDE that comes pre-installed with Python. It's perfect for beginners and provides all the essential features needed to start programming in Python.</p>
+                
+                <div class="feature-cards">
+                    <div class="feature-card">
+                        <div class="feature-card-header">
+                            <i class="fas fa-code"></i>
+                            <h3>Code Editor</h3>
+                        </div>
+                        <p>Write and edit Python code with syntax highlighting, making code easier to read and understand.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-card-header">
+                            <i class="fas fa-terminal"></i>
+                            <h3>Interactive Shell</h3>
+                        </div>
+                        <p>Test code snippets and experiment with Python commands in real-time, with immediate feedback.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-card-header">
+                            <i class="fas fa-bug"></i>
+                            <h3>Debugger</h3>
+                        </div>
+                        <p>Find and fix errors in your code with built-in debugging tools.</p>
+                    </div>
+                </div>
+                
+                <h3>IDLE Installation Guide</h3>
+                <p>The good news is that if you've already installed Python using the official installer, IDLE is already installed on your computer! Here's how to access it:</p>
+                
+                <div class="steps-list">
+                    <li>
+                        <strong>On Windows:</strong> Click Start menu → search for "IDLE" or navigate to Python in your programs list.
+                    </li>
+                    <li>
+                        <strong>On macOS:</strong> Open Applications folder → Python folder → IDLE icon, or use Spotlight (Cmd+Space) to search for "IDLE".
+                    </li>
+                    <li>
+                        <strong>On Linux:</strong> Open terminal and type <code>idle</code> or <code>idle3</code>, or look for IDLE in your applications menu.
+                    </li>
+                </div>
+                
+                <div class="warning-box">
+                    <h3><i class="fas fa-exclamation-triangle"></i> Troubleshooting</h3>
+                    <p>If IDLE doesn't launch, make sure Python is properly installed. You might need to reinstall Python or check if your PATH environment variable is correctly set.</p>
+                </div>
+                
+                <h3>IDLE First Look</h3>
+                <p>When you open IDLE, you'll see two main windows:</p>
+                
+                <div class="two-columns">
+                    <div>
+                        <h4>Python Shell Window</h4>
+                        <p>This is where you can type Python commands and see immediate results. It's also called "Interactive Mode." The shell displays the Python version and shows a prompt (>>>) where you can type commands.</p>
+                    </div>
+                    <div>
+                        <h4>Editor Window</h4>
+                        <p>This opens when you create a new file or open an existing one. Here you can write and save complete Python programs. To open it, click File → New File in the Shell window.</p>
+                    </div>
+                </div>
+                
+                <div class="tip-box">
+                    <h3><i class="fas fa-lightbulb"></i> Pro Tip</h3>
+                    <p>In IDLE, you can run your code by pressing F5 or by clicking Run → Run Module. This automatically saves your file before execution.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="online-compiler" class="section">
+        <div class="section-container">
+            <div class="section-title">
+                <i class="fas fa-cloud"></i>
+                <h2>Online Python Compilers: Code Without Installation</h2>
+            </div>
+            <div class="content-card">
+                <p>Online Python compilers (or interpreters) are web-based platforms that let you write and run Python code directly in your browser. They're perfect for beginners or situations where you can't install Python locally.</p>
+                
+                <h3>Benefits of Using Online Compilers</h3>
+                <ul class="key-points">
+                    <li><strong>No Installation Required:</strong> Start coding immediately without installing anything on your computer</li>
+                    <li><strong>Accessibility:</strong> Access your code from any device with an internet connection</li>
+                    <li><strong>Sharing:</strong> Easily share your code with others via unique URLs</li>
+                    <li><strong>Collaboration:</strong> Some platforms allow real-time collaboration</li>
+                    <li><strong>Learning:</strong> Perfect for following along during class without setup hassles</li>
+                </ul>
+                
+                <h3>OnlineGDB Usage Guide</h3>
+                <p>For our course, we'll use OnlineGDB as our online Python environment when needed. Here's how to get started:</p>
+                
+                <div class="steps-list">
+                    <li>
+                        <strong>Access the Website:</strong> Open your web browser and go to <a href="https://www.onlinegdb.com/" target="_blank">OnlineGDB.com</a>
+                    </li>
+                    <li>
+                        <strong>Select Python:</strong> From the dropdown menu at the top, select "Python" as your programming language
+                    </li>
+                    <li>
+                        <strong>Write Code:</strong> Use the editor area to write your Python code
+                    </li>
+                    <li>
+                        <strong>Run Your Code:</strong> Click the green "Run" button to execute your code
+                    </li>
+                    <li>
+                        <strong>View Output:</strong> See your program's output in the console area at the bottom
+                    </li>
+                    <li>
+                        <strong>(Optional) Save Your Work:</strong> Create a free account to save and organize your code
+                    </li>
+                </div>
+                
+                <div class="info-box">
+                    <h3><i class="fas fa-globe"></i> Other Popular Online Python Environments</h3>
+                    <ul>
+                        <li><strong>Replit:</strong> Full-featured development environment with file support</li>
+                        <li><strong>Google Colab:</strong> Ideal for data science with notebook interface and GPU support</li>
+                        <li><strong>Python Tutor:</strong> Great for visualizing code execution step-by-step</li>
+                        <li><strong>Programiz:</strong> Simple, beginner-friendly interface</li>
+                    </ul>
+                </div>
+                
+                <div class="warning-box">
+                    <h3><i class="fas fa-exclamation-triangle"></i> Limitations of Online Compilers</h3>
+                    <p>While convenient, online compilers have some restrictions:</p>
+                    <ul>
+                        <li>Limited access to certain Python libraries</li>
+                        <li>Execution time/memory constraints</li>
+                        <li>Potential connectivity issues</li>
+                        <li>Less suitable for large-scale projects</li>
+                    </ul>
+                    <p>For serious development, a local Python installation is recommended.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="python-modes" class="section">
+        <div class="section-container">
+            <div class="section-title">
+                <i class="fas fa-code-branch"></i>
+                <h2>Interactive vs. Script Mode: Two Ways to Use Python</h2>
+            </div>
+            <div class="content-card">
+                <p>Python can be used in two primary modes: Interactive Mode and Script Mode. Each has its own purpose and advantages.</p>
+                
+                <div class="two-columns">
+                    <div>
+                        <h3><i class="fas fa-terminal"></i> Interactive Mode</h3>
+                        <p>Also known as the Python Shell or REPL (Read-Evaluate-Print Loop), this mode allows you to type commands one at a time and see immediate results.</p>
+                        
+                        <h4>How to Access:</h4>
+                        <ul>
+                            <li>Type <code>python</code> or <code>python3</code> in your command line/terminal</li>
+                            <li>Open IDLE, which starts in interactive mode by default</li>
+                            <li>Use the interactive console in online compilers</li>
+                        </ul>
+                        
+                        <h4>Best Used For:</h4>
+                        <ul>
+                            <li>Testing quick ideas or short code snippets</li>
+                            <li>Exploring Python features</li>
+                            <li>Debugging and testing individual functions</li>
+                            <li>Learning and experimenting with Python</li>
+                        </ul>
+                        
+                        <div class="code-block">
+                            <div class="code-block-header">
+                                <span>Python Interactive Mode Example</span>
+                            </div>
+                            <div class="code-block-content">
+                                <pre>
+>>> print("Hello, Python!")
+Hello, Python!
+>>> 2 + 3
+5
+>>> name = "Student"
+>>> print(f"Welcome, {name}!")
+Welcome, Student!</pre>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3><i class="fas fa-file-code"></i> Script Mode</h3>
+                        <p>In Script Mode, you write your entire program in a file with a <code>.py</code> extension and execute it all at once.</p>
+                        
+                        <h4>How to Use:</h4>
+                        <ul>
+                            <li>Create a file with <code>.py</code> extension using any text editor or IDE</li>
+                            <li>Write your complete Python program</li>
+                            <li>Execute by running <code>python filename.py</code> in terminal or using the Run button in IDEs</li>
+                        </ul>
+                        
+                        <h4>Best Used For:</h4>
+                        <ul>
+                            <li>Writing complete programs</li>
+                            <li>Creating reusable code</li>
+                            <li>Developing larger applications</li>
+                            <li>Saving work for future use</li>
+                        </ul>
+                        
+                        <div class="code-block">
+                            <div class="code-block-header">
+                                <span>Python Script Example (hello.py)</span>
+                            </div>
+                            <div class="code-block-content">
+                                <pre>
+# This is a simple Python script
+print("Hello, Python!")
+
+# Calculating and storing values
+result = 2 + 3
+print(f"2 + 3 = {result}")
+
+# Using variables
+name = "Student"
+print(f"Welcome, {name}!")</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>Python File Saving and Loading</h3>
+                <div class="steps-list">
+                    <li>
+                        <strong>Creating a New File in IDLE:</strong> 
+                        <p>Open IDLE → Click File → New File → Write your code → Save with File → Save As → Give a name with <code>.py</code> extension</p>
+                    </li>
+                    <li>
+                        <strong>Running Your Python File:</strong> 
+                        <p>With the file open in IDLE editor, press F5 or click Run → Run Module</p>
+                    </li>
+                    <li>
+                        <strong>Loading an Existing File:</strong> 
+                        <p>In IDLE, click File → Open → Navigate to your Python file and select it</p>
+                    </li>
+                    <li>
+                        <strong>Running from Command Line/Terminal:</strong> 
+                        <p>Navigate to the directory containing your file → Type <code>python filename.py</code> or <code>python3 filename.py</code></p>
+                    </li>
+                </div>
+                
+                <div class="tip-box">
+                    <h3><i class="fas fa-lightbulb"></i> Good Practice</h3>
+                    <p>Organize your Python files in dedicated folders based on projects or topics. This makes it easier to manage your code as you learn more and create more complex programs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="hello-world" class="section">
+        <div class="section-container">
+            <div class="section-title">
+                <i class="fas fa-globe"></i>
+                <h2>Hello, World!: Your First Python Program</h2>
+            </div>
+            <div class="content-card">
+                <p>Creating a "Hello, World!" program is a programming tradition when learning a new language. It's a simple program that outputs the text "Hello, World!" to the screen.</p>
+                
+                <h3>Why "Hello, World!"?</h3>
+                <p>This simple program serves multiple purposes:</p>
+                <ul class="key-points">
+                    <li>Verifies that your Python environment is set up correctly</li>
+                    <li>Introduces the basic syntax for outputting text</li>
+                    <li>Provides a quick win to build confidence</li>
+                    <li>Follows a programming tradition dating back to the 1970s</li>
+                </ul>
+                
+                <h3>Creating Your First Python Program</h3>
+                
+                <div class="two-columns">
+                    <div>
+                        <h4>In Interactive Mode</h4>
+                        <div class="code-block">
+                            <div class="code-block-header">
+                                <span>Python Interactive Shell</span>
+                            </div>
+                            <div class="code-block-content">
+                                <pre>
+>>> print("Hello, World!")
+Hello, World!
+</pre>
+                            </div>
+                        </div>
+                        <p>Simply type the command at the Python prompt (>>>) and press Enter. The output appears immediately below.</p>
+                    </div>
+                    
+                    <div>
+                        <h4>In Script Mode</h4>
+                        <div class="code-block">
+                            <div class="code-block-header">
+                                <span>hello_world.py</span>
+                            </div>
+                            <div class="code-block-content">
+                                <pre>
+# My first Python program
+print("Hello, World!")
+
+# Adding a personal touch
+print("Welcome to Python programming!")
+</pre>
+                            </div>
+                        </div>
+                        <p>Save this code in a file named <code>hello_world.py</code> and run it using IDLE or the command line.</p>
+                    </div>
+                </div>
+                
+                <h3>Understanding the Code</h3>
+                <ul>
+                    <li><code>print()</code> is a built-in Python function that displays output on the screen</li>
+                    <li><code>"Hello, World!"</code> is a string (text) enclosed in quotation marks</li>
+                    <li>Lines starting with <code>#</code> are comments; Python ignores them when running</li>
+                </ul>
+                
+                <div class="info-box">
+                    <h3><i class="fas fa-info-circle"></i> Fun Fact</h3>
+                    <p>In Python 2 (now obsolete), the print statement didn't require parentheses: <code>print "Hello, World!"</code>. In Python 3, print is a function and requires parentheses: <code>print("Hello, World!")</code>. This is one of many reasons why Python 3 is more consistent.</p>
+                </div>
+                
+                <h3>Expanding Your "Hello, World!"</h3>
+                <p>Let's try a slightly more advanced version that uses variables:</p>
+                
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span>enhanced_hello.py</span>
+                    </div>
+                    <div class="code-block-content">
+                        <pre>
+# Using variables in our Hello World program
+name = "Python Learner"
+day = 2
+course = "Python Training"
+
+# Using formatted string to combine text and variables
+print(f"Hello, {name}!")
+print(f"Welcome to Day {day} of your {course}!")
+print("You've successfully run your first Python program!")
+</pre>
+                    </div>
+                </div>
+                
+                <div class="tip-box">
+                    <h3><i class="fas fa-tasks"></i> Practice Assignments</h3>
+                    <p>Try these exercises to reinforce what you've learned:</p>
+                    <ol>
+                        <li>Create a hello_world.py file and run it successfully</li>
+                        <li>Modify it to display your name</li>
+                        <li>Add more print statements with different messages</li>
+                        <li>Try using variables to store your name and age, then display them</li>
+                        <li>Experiment with both interactive mode and script mode</li>
+                    </ol>
+                </div>
+                
+                <div class="warning-box">
+                    <h3><i class="fas fa-exclamation-triangle"></i> Common Beginner Mistakes</h3>
+                    <ul>
+                        <li>Forgetting the parentheses in <code>print()</code></li>
+                        <li>Mismatched quotation marks</li>
+                        <li>Forgetting to save the file before running it</li>
+                        <li>Using the wrong file extension (use .py)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <i class="fab fa-python"></i>
+                <span>Itokyo Academy Pvt Ltd</span>
+            </div>
+            <p>Empowering students with practical Python skills since 2023</p>
+            <div class="footer-social">
+                <a href="https://itokyoacademy.com" target="_blank" class="social-icon"><i class="fa-solid fa-earth-asia"></i></a>
+                <a href="https://www.linkedin.com/company/itokyo-academy/" target="_blank" class="social-icon"><i class="fab fa-linkedin"></i></a>
+                <a href="https://www.instagram.com/itokyoacademy/?hl=en" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+                <a href="https://github.com/Abhinivesh2729/Python-Training" target="_blank" class="social-icon"><i class="fab fa-github"></i></a>
+            </div>
+            <div class="copyright">
+                &copy; 2025 Itokyo Academy. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <div class="page-up" id="pageUp">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script>
+        // Create particles for the header
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const numberOfParticles = 20;
+            
+            for (let i = 0; i < numberOfParticles; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random size between 5px and 15px
+                const size = Math.random() * 10 + 5;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Random position
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                particle.style.left = `${posX}%`;
+                particle.style.top = `${posY}%`;
+                
+                // Random animation duration
+                const duration = Math.random() * 15 + 10;
+                particle.style.animationDuration = `${duration}s`;
+                
+                // Random animation delay
+                const delay = Math.random() * 5;
+                particle.style.animationDelay = `${delay}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Reveal sections as they come into view
+        function revealSections() {
+            const sections = document.querySelectorAll('.section');
+            const windowHeight = window.innerHeight;
+            
+            sections.forEach((section) => {
+                const sectionTop = section.getBoundingClientRect().top;
+                if (sectionTop < windowHeight - 100) {
+                    section.classList.add('active');
+                }
+            });
+        }
+        
+        // Update active nav item based on scroll position
+        function updateActiveNavItem() {
+            const sections = document.querySelectorAll('.section, header');
+            const navItems = document.querySelectorAll('.nav-item');
+            
+            let currentSectionId = '';
+            
+            sections.forEach((section) => {
+                const sectionTop = section.getBoundingClientRect().top;
+                if (sectionTop < window.innerHeight / 2) {
+                    currentSectionId = section.id;
+                }
+            });
+            
+            // Handle the header case specifically
+            if (document.querySelector('header').getBoundingClientRect().bottom > 0) {
+                currentSectionId = 'home';
+            }
+            
+            navItems.forEach((item) => {
+                item.classList.remove('active');
+                if (item.getAttribute('href') === `#${currentSectionId}`) {
+                    item.classList.add('active');
+                }
+            });
+            
+            // Show/hide page up button
+            const pageUp = document.getElementById('pageUp');
+            if (window.scrollY > window.innerHeight / 2) {
+                pageUp.classList.add('visible');
+            } else {
+                pageUp.classList.remove('visible');
+            }
+        }
+        
+        // Toggle mobile menu
+        function toggleMobileMenu() {
+            const navContainer = document.getElementById('navContainer');
+            navContainer.classList.toggle('active');
+            
+            // Close menu when a navigation item is clicked
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    navContainer.classList.remove('active');
+                });
+            });
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            revealSections();
+            updateActiveNavItem();
+            
+            // Mobile menu toggle
+            document.getElementById('menuToggle').addEventListener('click', toggleMobileMenu);
+            
+            // Reveal sections on scroll
+            window.addEventListener('scroll', function() {
+                revealSections();
+                updateActiveNavItem();
+            });
+            
+            // Smooth scroll for navigation
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        window.scrollTo({
+                            top: target.offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Page up button
+            document.getElementById('pageUp').addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    document.getElementById('navContainer').classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
