@@ -1142,94 +1142,7 @@ The area of a circle with radius 5 is 78.54
                     <p>Most Python developers follow the PEP 8 style guide, which provides conventions for writing clean, readable Python code. Using tools like <code>black</code> or <code>flake8</code> can help ensure your code follows these conventions.</p>
                 </div>
             </div>
-            
-            <div class="content-section">
-                <h2><i class="fas fa-laptop-code"></i> Practical Examples</h2>
-                <p>Let's put together what we've learned to create some practical examples:</p>
-                
-                <h3>Example 1: Personal Greeting</h3>
-                
-                <div class="code-block">
-                    <div class="code-header">
-                        <span>greeting.py</span>
-                        <div class="buttons">
-                            <div class="button red"></div>
-                            <div class="button yellow"></div>
-                            <div class="button green"></div>
-                        </div>
-                    </div>
-                    <div class="code-content">
-                        <pre><code class="language-python"># Simple program to greet the user
-# This demonstrates user input, variables, and print function
 
-# Get user input
-name = input("What is your name? ")
-
-# Process the input
-greeting = f"Hello, {name}! Welcome to Python programming."
-
-# Display output
-print(greeting)
-print("We hope you enjoy learning Python!")</code></pre>
-                    </div>
-                </div>
-                
-                <div class="output-header">Sample Run:</div>
-                <div class="example-output">
-What is your name? Alice
-Hello, Alice! Welcome to Python programming.
-We hope you enjoy learning Python!
-                </div>
-                
-                <h3>Example 2: Temperature Converter</h3>
-                
-                <div class="code-block">
-                    <div class="code-header">
-                        <span>temp_converter.py</span>
-                        <div class="buttons">
-                            <div class="button red"></div>
-                            <div class="button yellow"></div>
-                            <div class="button green"></div>
-                        </div>
-                    </div>
-                    <div class="code-content">
-                        <pre><code class="language-python"># Temperature converter: Fahrenheit to Celsius
-# Formula: C = (F - 32) * 5/9
-
-# Function definition with docstring
-def fahrenheit_to_celsius(fahrenheit):
-    """
-    Convert temperature from Fahrenheit to Celsius.
-    
-    Parameters:
-    fahrenheit (float): Temperature in Fahrenheit
-    
-    Returns:
-    float: Temperature in Celsius
-    """
-    celsius = (fahrenheit - 32) * 5/9
-    return celsius
-
-# Main program
-if __name__ == "__main__":
-    # Get user input
-    fahrenheit = float(input("Enter temperature in Fahrenheit: "))
-    
-    # Convert temperature
-    celsius = fahrenheit_to_celsius(fahrenheit)
-    
-    # Display result
-    print(f"{fahrenheit}°F is equal to {celsius:.2f}°C")</code></pre>
-                    </div>
-                </div>
-                
-                <div class="output-header">Sample Run:</div>
-                <div class="example-output">
-Enter temperature in Fahrenheit: 98.6
-98.6°F is equal to 37.00°C
-                </div>
-            </div>
-            
             <div class="assignment-section">
                 <div class="floating-elements">
                     <div class="floating-element one"></div>
@@ -1238,48 +1151,96 @@ Enter temperature in Fahrenheit: 98.6
                     <div class="floating-element four"></div>
                 </div>
                 
-                <h2><i class="fas fa-tasks"></i> Day 3 Assignment</h2>
-                <p>Apply what you've learned today to complete the following assignment. This will help reinforce your understanding of Python basics.</p>
-                
+                <h2><i class="fas fa-tasks"></i> Practice Assignments</h2>
+                <p>Complete these assignments to reinforce your understanding of today's concepts.</p>
+
                 <div class="assignment-task">
-                    <h3>Task: Create a Simple Calculator</h3>
-                    <p>Build a basic calculator program that performs arithmetic operations on two numbers.</p>
-                    
+                    <h3>1. F-String Magic</h3>
+                    <p>Create a program that uses f-strings to format the following information:</p>
                     <ul>
-                        <li>Create a Python script named <code>calculator.py</code></li>
-                        <li>Ask the user to input two numbers</li>
-                        <li>Ask the user to select an operation (addition, subtraction, multiplication, or division)</li>
-                        <li>Perform the selected operation on the numbers</li>
-                        <li>Display the result with appropriate formatting</li>
-                        <li>Include comments explaining your code</li>
-                        <li>Use docstrings for any functions you create</li>
-                        <li>Handle potential errors (e.g., division by zero)</li>
+                        <li>Create variables for name, age, city, and hobby</li>
+                        <li>Format a biography using these variables</li>
+                        <li>Include a calculation for birth year</li>
+                        <li>Format numbers with specific decimal places</li>
                     </ul>
-                    
-                    <p>Bonus challenge: Add a feature that allows the user to perform multiple calculations in a row without restarting the program.</p>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>Expected Output Format:</span>
+                        </div>
+                        <div class="code-content">
+                            <pre><code class="language-python"># Example output:
+# Hi! My name is John, and I'm 25 years old.
+# I was born in 1998 and live in Tokyo.
+# I love playing guitar and have been practicing for 7.50 years.</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+              
+                <div class="assignment-task">
+                    <h3>2. Comment Practice Challenge</h3>
+                    <p>Take the following code and add appropriate comments:</p>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>Code to Document:</span>
+                        </div>
+                        <div class="code-content">
+                            <pre><code class="language-python">def calculate_total(items, tax_rate):
+    subtotal = sum(items)
+    tax = subtotal * tax_rate
+    total = subtotal + tax
+    return subtotal, tax, total
+
+prices = [29.99, 45.50, 12.99]
+rate = 0.08
+sub, tax, total = calculate_total(prices, rate)
+print(f"Order Summary: ${total:.2f}")</code></pre>
+                        </div>
+                    </div>
+                    <p>Add:</p>
+                    <ul>
+                        <li>A Multiline comment for the function</li>
+                        <li>Inline comments explaining complex calculations</li>
+                        <li>Header comment explaining the program's purpose</li>
+                        <li>Comments explaining the variable usage</li>
+                    </ul>
+                </div>
+
+                <div class="assignment-task">
+                    <h3>2. Statements & Expressions Workshop</h3>
+                    <p>Create a program that demonstrates understanding of statements and expressions:</p>
+                    <ul>
+                        <li>Write a temperature converter (C to F and F to C)</li>
+                        <li>Include compound expressions with multiple operators</li>
+                        <li>Use assignment statements with operators (+=, -=, etc.)</li>
+                        <li>Implement input statements and type conversion</li>
+                    </ul>
+
+
+                <div class="btn">Download Assignment Template</div>
+            </div>
+                        </div></div>
+    <footer style="width: 100%;">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fab fa-python"></i>
+                    <span>iTokyo Academy Pvt Ltd</span>
+                </div>
+                <p>Empowering students with practical Python skills since 2023</p>
+                <div class="footer-social">
+                    <a href="https://iTokyoacademy.com" target="_blank" class="social-icon"><i class="fa-solid fa-earth-asia"></i></a>
+                    <a href="https://www.linkedin.com/company/iTokyo-academy/" target="_blank" class="social-icon"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://www.instagram.com/iTokyoacademy/?hl=en" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="https://github.com/Abhinivesh2729/Python-Training" target="_blank" class="social-icon"><i class="fab fa-github"></i></a>
+                </div>
+                <div class="copyright">
+                    &copy; 2025 iTokyo Academy. All rights reserved.
                 </div>
             </div>
         </div>
-    </section>
-    
-    <footer>
-        <div class="footer-content">
-            <div class="footer-logo">
-                <i class="fab fa-python"></i>
-                <span>iTokyo Academy Pvt Ltd</span>
-            </div>
-            <p>Empowering students with practical Python skills since 2023</p>
-            <div class="footer-social">
-                <a href="https://iTokyoacademy.com" target="_blank" class="social-icon"><i class="fa-solid fa-earth-asia"></i></a>
-                <a href="https://www.linkedin.com/company/iTokyo-academy/" target="_blank" class="social-icon"><i class="fab fa-linkedin"></i></a>
-                <a href="https://www.instagram.com/iTokyoacademy/?hl=en" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
-                <a href="https://github.com/Abhinivesh2729/Python-Training" target="_blank" class="social-icon"><i class="fab fa-github"></i></a>
-            </div>
-            <div class="copyright">
-                &copy; 2025 iTokyo Academy. All rights reserved.
-            </div>
-        </div>
     </footer>
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
