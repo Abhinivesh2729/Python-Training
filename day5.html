@@ -1,0 +1,1820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Training - Day 4 | iTokyo Academy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
+    <style>
+        :root {
+            --primary: #3498db;
+            --secondary: #2ecc71;
+            --dark: #2c3e50;
+            --light: #ecf0f1;
+            --accent: #9b59b6;
+            --code-bg: #1e1e1e;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 60%);
+            animation: pulse 15s infinite linear;
+            z-index: 0;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0.3;
+            }
+            50% {
+                transform: translate(10%, 10%) scale(1.2);
+                opacity: 0.4;
+            }
+            100% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0.3;
+            }
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 12px;
+            font-size: 32px;
+        }
+        
+        .hero {
+            padding: 80px 0 40px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInDown 1s both;
+        }
+        
+        .hero p {
+            font-size: 20px;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            color: var(--dark);
+            animation: fadeInUp 1s both;
+            animation-delay: 0.2s;
+        }
+        
+        .instructor {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            max-width: 600px;
+            margin: 0 auto 50px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s both;
+            animation-delay: 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .instructor::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, transparent 50%, rgba(46, 204, 113, 0.1) 50%);
+            z-index: 0;
+        }
+        
+        .instructor-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 32px;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+        
+        .instructor-info h3 {
+            font-size: 22px;
+            margin-bottom: 5px;
+            color: var(--primary);
+        }
+        
+        .instructor-info p {
+            font-size: 16px;
+            color: #666;
+        }
+        
+        .main-content {
+            padding: 0 0 80px;
+        }
+        
+        .topics-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .topic-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            opacity: 0;
+            animation: fadeInUp 0.8s forwards;
+        }
+        
+        .topic-card:nth-child(1) { animation-delay: 0.2s; }
+        .topic-card:nth-child(2) { animation-delay: 0.4s; }
+        .topic-card:nth-child(3) { animation-delay: 0.6s; }
+        .topic-card:nth-child(4) { animation-delay: 0.8s; }
+        
+        .topic-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+        
+        .topic-header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .topic-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%);
+            transform: translate(30%, -30%);
+        }
+        
+        .topic-header i {
+            font-size: 24px;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .topic-header h2 {
+            font-size: 22px;
+            margin-bottom: 5px;
+        }
+        
+        .topic-content {
+            padding: 20px;
+        }
+        
+        .topic-content p {
+            margin-bottom: 15px;
+            color: #555;
+        }
+        
+        .topic-content ul {
+            list-style-type: none;
+            margin-bottom: 15px;
+        }
+        
+        .topic-content ul li {
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .topic-content ul li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            animation: fadeIn 1s both;
+            animation-delay: 0.6s;
+        }
+        
+        .content-section h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: var(--primary);
+            border-bottom: 2px solid var(--light);
+            padding-bottom: 10px;
+        }
+        
+        .content-section p {
+            margin-bottom: 20px;
+            font-size: 16px;
+            color: #444;
+        }
+        
+        .code-block {
+            background-color: var(--code-bg);
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .code-header {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 8px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .code-header span {
+            color: #aaa;
+            font-size: 14px;
+        }
+        
+        .code-header .buttons {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .code-header .button {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        
+        .code-header .button.red { background-color: #ff5f56; }
+        .code-header .button.yellow { background-color: #ffbd2e; }
+        .code-header .button.green { background-color: #27c93f; }
+        
+        .code-content {
+            padding: 15px;
+            overflow-x: auto;
+            line-height: 1.5;
+        }
+        
+        .code-content code {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+        }
+        
+        .explanation {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--primary);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .example-container {
+            margin: 30px 0;
+        }
+        
+        .example-output {
+            background-color: #2c3e50;
+            color: white;
+            padding: 15px;
+            border-radius: 0 0 8px 8px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            margin-top: -10px;
+        }
+        
+        .output-header {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 8px 15px;
+            border-radius: 8px 8px 0 0;
+            color: #aaa;
+            font-size: 14px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+        }
+        
+        .tips-section {
+            margin-top: 40px;
+        }
+        
+        .tip-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--accent);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .tip-card h3 {
+            color: var(--accent);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .tip-card h3 i {
+            margin-right: 10px;
+        }
+        
+        .assignment-section {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 10px;
+            padding: 40px;
+            color: white;
+            margin-top: 60px;
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 1s both;
+            animation-delay: 0.8s;
+        }
+        
+        .assignment-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+        }
+        
+        .assignment-section h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .assignment-section p {
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .assignment-task {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .assignment-task h3 {
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        
+        .assignment-task ul {
+            list-style-type: none;
+            margin-left: 20px;
+        }
+        
+        .assignment-task ul li {
+            margin-bottom: 10px;
+            position: relative;
+        }
+        
+        .assignment-task ul li::before {
+            content: '✓';
+            position: absolute;
+            left: -20px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: white;
+            color: var(--primary);
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .floating-element {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            animation-name: float;
+            animation-duration: 10s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
+        
+        .floating-element.one {
+            top: 10%;
+            left: 20%;
+            animation-delay: 0s;
+        }
+        
+        .floating-element.two {
+            top: 30%;
+            left: 80%;
+            animation-delay: 2s;
+        }
+        
+        .floating-element.three {
+            top: 70%;
+            left: 50%;
+            animation-delay: 5s;
+        }
+        
+        .floating-element.four {
+            top: 20%;
+            left: 90%;
+            animation-delay: 7s;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) rotate(0);
+                opacity: 0.7;
+            }
+            50% {
+                transform: translate(100px, 100px) rotate(180deg);
+                opacity: 0.3;
+            }
+            100% {
+                transform: translate(0, 0) rotate(360deg);
+                opacity: 0.7;
+            }
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .footer-logo {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-social a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s;
+        }
+        
+        .footer-social a:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .footer-copyright {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo {
+                margin-bottom: 20px;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero p {
+                font-size: 18px;
+            }
+            
+            .instructor {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .instructor-img {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+            
+            .content-section {
+                padding: 30px 20px;
+            }
+            
+            .assignment-section {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    iTokyo Academy
+                </div>
+                <div class="course-info">
+                    <h2>Python Training Program</h2>
+                    <p>Day 4: Working with Strings</p>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="container">
+            <h1>Python Strings: Day 4</h1>
+            <p>Unlock the power of text manipulation and processing with Python's string capabilities - an essential skill for any programmer.</p>
+            
+            <div class="instructor">
+                <div class="instructor-img">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="instructor-info">
+                    <h3>Abhinivesh S</h3>
+                    <p>Senior Software Engineer</p>
+                    <p><i class="fas fa-code"></i> Python Specialist • <i class="fas fa-chalkboard-teacher"></i> Lead Instructor</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="main-content">
+        <div class="container">
+            <div class="topics-container">
+                <div class="topic-card">
+                    <div class="topic-header">
+                        <i class="fas fa-quote-left"></i>
+                        <h2>String Basics</h2>
+                        <p>Understanding what strings are</p>
+                    </div>
+                    <div class="topic-content">
+                        <p>Learn the fundamental concepts of strings in Python and why they are so important in programming.</p>
+                        <ul>
+                            <li>What are strings?</li>
+                            <li>Creating and displaying strings</li>
+                            <li>String quotes and special characters</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="topic-card">
+                    <div class="topic-header">
+                        <i class="fas fa-tools"></i>
+                        <h2>String Operations</h2>
+                        <p>Essential string manipulation techniques</p>
+                    </div>
+                    <div class="topic-content">
+                        <p>Discover how to manipulate and work with strings using Python's built-in methods and operations.</p>
+                        <ul>
+                            <li>Concatenation and repetition</li>
+                            <li>String indexing and slicing</li>
+                            <li>String methods for transformation</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="topic-card">
+                    <div class="topic-header">
+                        <i class="fas fa-search"></i>
+                        <h2>String Methods</h2>
+                        <p>Powerful built-in functions</p>
+                    </div>
+                    <div class="topic-content">
+                        <p>Explore Python's comprehensive library of string methods that make text processing efficient and straightforward.</p>
+                        <ul>
+                            <li>Finding and replacing text</li>
+                            <li>Checking string properties</li>
+                            <li>Formatting and alignment</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="topic-card">
+                    <div class="topic-header">
+                        <i class="fas fa-magic"></i>
+                        <h2>Practical Applications</h2>
+                        <p>Real-world string usage</p>
+                    </div>
+                    <div class="topic-content">
+                        <p>See how strings are used in practical scenarios and common tasks in everyday programming.</p>
+                        <ul>
+                            <li>User input processing</li>
+                            <li>Text analysis and validation</li>
+                            <li>Building user-friendly outputs</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <h2><i class="fas fa-quote-left"></i> What are Strings in Python?</h2>
+                <p>In Python, a string is a sequence of characters enclosed within quotes. Strings are one of the most commonly used data types in programming because they allow us to work with text data. Think of strings as the way computers handle words, sentences, and any text-based information.</p>
+                
+                <div class="explanation">
+                    <h3><i class="fas fa-lightbulb"></i> Why Strings Matter</h3>
+                    <p>Strings are essential in programming because they allow us to:</p>
+                    <ul>
+                        <li>Store and manipulate text data like names, addresses, and messages</li>
+                        <li>Display information to users in a readable format</li>
+                        <li>Process user input from forms, command lines, or text fields</li>
+                        <li>Work with external data from files, databases, or web APIs</li>
+                    </ul>
+                    <p>Even when you're not directly working with text, you'll often convert other data types to strings for display or storage purposes.</p>
+                </div>
+                
+
+                <h3>String Indexing</h3>
+                <p>Each character in a string has a position (index), starting from 0 for the first character. You can access individual characters using these indices:</p>
+                
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>indexing.py</span>
+                        <div class="buttons">
+                            <div class="button red"></div>
+                            <div class="button yellow"></div>
+                            <div class="button green"></div>
+                        </div>
+                    </div>
+                    <div class="code-content">
+                        <pre><code class="language-python"># String indexing (positions start at 0)
+message = "Hello, Python!"
+print("First character:", message[0])
+print("Fifth character:", message[4])
+
+# Negative indexing (counting from the end)
+print("Last character:", message[-1])
+print("Second to last character:", message[-2])
+
+# Trying to access an index out of range will cause an error
+# Uncomment to see:
+# print(message[100])  # IndexError: string index out of range</code></pre>
+                    </div>
+                </div>
+                
+                <div class="output-header">Output:</div>
+                <div class="example-output">
+First character: H
+Fifth character: o
+Last character: !
+Second to last character: n
+                </div>
+                
+                <div class="explanation">
+                    <h3><i class="fas fa-lightbulb"></i> Understanding String Indices</h3>
+                    <img src="/api/placeholder/600/200" alt="String indexing diagram showing positions" />
+                    <p>Think of a string as a sequence of characters lined up in order. Each character has a position number (index):</p>
+                    <ul>
+                        <li>The first character is at index 0</li>
+                        <li>The second character is at index 1</li>
+                        <li>And so on...</li>
+                    </ul>
+                    <p>You can also count from the end using negative indices:</p>
+                    <ul>
+                        <li>The last character is at index -1</li>
+                        <li>The second-to-last character is at index -2</li>
+                        <li>And so on...</li>
+                    </ul>
+                </div>
+                
+                <h3>String Slicing</h3>
+                <p>Slicing allows you to extract a portion (substring) of a string using the syntax <code>string[start:end]</code>. This returns characters from the <code>start</code> index up to, but not including, the <code>end</code> index:</p>
+                
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>slicing.py</span>
+                        <div class="buttons">
+                            <div class="button red"></div>
+                            <div class="button yellow"></div>
+                            <div class="button green"></div>
+                        </div>
+                    </div>
+                    <div class="code-content">
+                        <pre><code class="language-python"># Basic slicing
+message = "Hello, Python!"
+print("First 5 characters:", message[0:5])  # or simply message[:5]
+print("Characters 7 to 13:", message[7:13])
+print("From 7th character to the end:", message[7:])
+
+# Using negative indices in slices
+print("Last 7 characters:", message[-7:])
+print("Everything except the last 2 characters:", message[:-2])
+
+# Slicing with step
+print("Every second character:", message[::2])
+print("Reverse the string:", message[::-1])</code></pre>
+                    </div>
+                </div>
+                
+                <div class="output-header">Output:</div>
+                <div class="example-output">
+First 5 characters: Hello
+Characters 7 to 13: Python
+From 7th character to the end: Python!
+Last 7 characters: Python!
+Everything except the last 2 characters: Hello, Pytho
+Every second character: Hlo yhn
+Reverse the string: !nohtyP ,olleH
+                </div>
+                
+                <div class="tip-card">
+                    <h3><i class="fas fa-star"></i> Pro Tip</h3>
+                    <p>The slice notation <code>[start:end:step]</code> is powerful. The <code>step</code> parameter lets you take every nth character. A negative step reverses the string. This works not just for strings but for any sequence in Python, like lists!</p>
+                </div>
+                
+                <h3>String Immutability</h3>
+                <p>An important property of strings in Python is that they are <strong>immutable</strong>, which means you cannot change a string once it's created. Any operation that appears to modify a string actually creates a new string:</p>
+                
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>immutability.py</span>
+                        <div class="buttons">
+                            <div class="button red"></div>
+                            <div class="button yellow"></div>
+                            <div class="button green"></div>
+                        </div>
+                    </div>
+                    <div class="code-content">
+                        <pre><code class="language-python"># Strings are immutable
+name = "John"
+print("Original:", name)
+
+# This doesn't change the original string, it creates a new one
+new_name = name + " Smith"
+print("After concatenation:", name)
+print("New string:", new_name)
+
+# You cannot change individual characters
+# Uncomment to see the error:
+# name[0] = 'j'  # TypeError: 'str' object does not support item assignment
+
+# The proper way to change a character is to create a new string
+modified_name = 'j' + name[1:]
+print("Modified name:", modified_name)</code></pre>
+                    </div>
+                </div>
+                
+                <div class="output-header">Output:</div>
+                <div class="example-output">
+Original: John
+After concatenation: John
+New string: John Smith
+Modified name: john
+                </div>
+                
+                <div class="explanation">
+                    <h3><i class="fas fa-lightbulb"></i> Why Immutability Matters</h3>
+                    <p>Immutability makes strings more predictable and safer to use, especially when multiple parts of your program reference the same string. It ensures that the string's value remains consistent throughout your program's execution.</p>
+                    <p>However, it also means that operations that modify strings repeatedly (like building a string in a loop) can be inefficient. For such cases, Python provides other tools like the <code>join()</code> method or the <code>StringBuilder</code> class.</p>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <h2><i class="fas fa-search"></i> Essential String Methods</h2>
+                <p>Python provides a rich set of built-in methods for string manipulation. These methods make it easy to transform, search, and validate strings without writing complex code.</p>
+                
+                <h3>Case Transformation</h3>
+                <p>Python provides several methods to change the case of strings:</p>
+                
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>case_methods.py</span>
+                        <div class="buttons">
+                            <div class="button red"></div>
+                            <div class="button yellow"></div>
+                            <div class="button green"></div>
+                        </div>
+                    </div>
+                    <div class="code-content">
+                        <pre><code class="language-python"># Case conversion methods
+text = "Hello, Python World!"
+
+# Convert to uppercase
+print(text.upper())
+
+# Convert to lowercase
+print(text.lower())
+
+# Capitalize (first character uppercase, rest lowercase)
+print(text.capitalize())
+
+# Title case (first character of each word uppercase)
+print(text.title())
+
+# Swap case (uppercase becomes lowercase and vice versa)
+print(text.swapcase())</code></pre>
+                    </div>
+                </div>
+                
+                <div class="output-header">Output:</div>
+                <div class="example-output">
+HELLO, PYTHON WORLD!
+hello, python world!
+Hello, python world!
+Hello, Python World!
+hELLO, pYTHON wORLD!
+                </div>
+                
+                <h3>Finding and Replacing Text</h3>
+                <p>These methods help you search for substrings and replace content within strings:</p>
+                
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>find_replace.py</span>
+                        <div class="buttons">
+                            <div class="button red"></div>
+                            <div class="button yellow"></div>
+                            <div class="button green"></div>
+                        </div>
+                    </div>
+                    <div class="code-content">
+                        <pre><code class="language-python"># Finding and replacing
+text = "Python is amazing and Python is easy to learn."
+
+# Find (returns the index of the first occurrence or -1 if not found)
+print("Position of 'amazing':", text.find("amazing"))
+print("Position of 'Java':", text.find("Java"))
+
+# Count occurrences
+print("Number of times 'Python' appears:", text.count("Python"))
+
+# Replace (returns a new string with replacements)
+new_text = text.replace("Python", "JavaScript")
+print("After replacement:", new_text)
+
+# Replace with a limit
+limited_replace = text.replace("Python", "JavaScript", 1)
+print("After limited replacement:", limited_replace)</code></pre>
+                    </div>
+                </div>
+                
+                <div class="output-header">Output:</div>
+                <div class="example-output">
+Position of 'amazing': 10
+Position of 'Java': -1
+Number of times 'Python' appears: 2
+After replacement: JavaScript is amazing and JavaScript is easy to learn.
+After limited replacement: JavaScript is amazing and Python is easy to learn.
+                </div>
+                
+                <h3>Stripping Whitespace</h3>
+                <p>Often when working with user input or data from files, you need to remove excess whitespace:</p>
+                
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>strip_methods.py</span>
+                        <div class="buttons">
+                            <div class="button red"></div>
+                            <div class="button yellow"></div>
+                            <div class="button green"></div>
+                        </div>
+                    </div>
+                    <div class="code-content">
+                        <pre><code class="language-python"># Stripping whitespace
+text = "   Hello, World!   "
+print("Original:", repr(text))  # repr() shows whitespace
+
+# Strip whitespace from both ends
+print("Stripped:", repr(text.strip()))
+
+# Strip from left side only
+print("Left stripped:", repr(text.lstrip()))
+
+# Strip from right side only
+print("Right stripped:", repr(text.rstrip()))
+
+# Strip specific characters
+text2 = "###Python###"
+print("Strip # characters:", text2.strip('#'))</code></pre>
+                    </div>
+                </div>
+                
+                <div class="output-header">Output:</div>
+                <div class="example-output">
+Original: '   Hello, World!   '
+Stripped: 'Hello, World!'
+Left stripped: 'Hello, World!   '
+Right stripped: '   Hello, World!'
+Strip # characters: Python
+                </div>
+                
+                <h3>Checking String Properties</h3>
+                <p>Python provides methods to check various properties of strings:</p>
+                
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>property_methods.py</span>
+                        <div class="buttons">
+                            <div class="button red"></div>
+                            <div class="button yellow"></div>
+                            <div class="button green"></div>
+                        </div>
+                    </div>
+                    <div class="code-content">
+                        <pre><code class="language-python"># Methods for checking string properties
+print("'123'.isdigit():", '123'.isdigit())
+print("'abc'.isalpha():", 'abc'.isalpha())
+print("'abc123'.isalnum():", 'abc123'.isalnum())
+print("'ABC'.isupper():", 'ABC'.isupper())
+print("'abc'.islower():", 'abc'.islower())
+print("'Hello World'.istitle():", 'Hello World'.istitle())
+print("'   '.isspace():", '   '.isspace())
+
+# Practical application: Input validation
+user_input = "42"
+if user_input.isdigit():
+    number = int(user_input)
+    print(f"Valid number: {number}")
+else:
+    print("Not a valid number")</code></pre>
+                    </div>
+                </div>
+                
+                <div class="output-header">Output:</div>
+                <div class="example-output">
+'123'.isdigit(): True
+'abc'.isalpha(): True
+'abc123'.isalnum(): True
+'ABC'.isupper(): True
+'abc'.islower(): True
+'Hello World'.istitle(): True
+'   '.isspace(): True
+Valid number: 42
+                </div>
+                
+                <h3>Splitting and Joining Strings</h3>
+                <p>These methods are incredibly useful for working with text data:</p>
+                
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>split_join.py</span>
+                        <div class="buttons">
+                            <div class="button red"></div>
+                            <div class="button yellow"></div>
+                            <div class="button green"></div>
+                        </div>
+                    </div>
+                    <div class="code-content">
+                        <pre><code class="language-python"># Splitting strings
+sentence = "Python is a great programming language"
+words = sentence.split()  # Split by whitespace by default
+print("Words in sentence:", words)
+
+# Split by specific delimiter
+csv_data = "apple,banana,orange,grape"
+fruits = csv_data.split(',')
+print("Fruits:", fruits)
+
+# Limit the number of splits
+limited_split = sentence.split(' ', 2)
+print("Limited split:", limited_split)
+
+# Joining strings
+joined_words = ' '.join(words)
+print("Joined words:", joined_words)
+
+# Joining with different separator
+joined_fruits = ' | '.join(fruits)
+print("Joined fruits:", joined_fruits)
+
+# Practical use case: Working with file paths
+path_parts = ['data', 'users', 'profile.txt']
+file_path = '/'.join(path_parts)
+print("File path:", file_path)</code></pre>
+                    </div>
+                </div>
+                
+                <div class="output-header">Output:</div>
+                <div class="example-output">
+Words in sentence: ['Python', 'is', 'a', 'great', 'programming', 'language']
+Fruits: ['apple', 'banana', 'orange', 'grape']
+Limited split: ['Python', 'is', 'a great programming language']
+Joined words: Python is a great programming language
+Joined fruits: apple | banana | orange | grape
+File path: data/users/profile.txt
+                </div>
+                
+                <div class="tip-card">
+                    <h3><i class="fas fa-star"></i> Pro Tip</h3>
+                    <p>The <code>join()</code> method may seem counterintuitive at first because it's called on the separator, not on the list of strings. This design allows for more flexibility and better performance, especially when building large strings.</p>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <h2><i class="fas fa-magic"></i> String Formatting</h2>
+                <p>Python offers several ways to format strings, allowing you to create dynamic text with values inserted at specific positions.</p>
+                
+                <h3>F-Strings (Python 3.6+)</h3>
+                <p>F-strings (formatted string literals) are the most modern and recommended way to format strings in Python. They're concise, readable, and efficient:</p>
+                
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>f_strings.py</span>
+                        <div class="buttons">
+                            <div class="button red"></div>
+                            <div class="button yellow"></div>
+                            <div class="button green"></div>
+                        </div>
+                    </div>
+                    <div class="code-content">
+                        <pre><code class="language-python"># F-strings for simple variable interpolation
+name = "Alice"
+age = 30
+print(f"My name is {name} and I am {age} years old.")
+
+# F-strings with expressions
+base = 5
+height = 10
+print(f"The area of the triangle is {0.5 * base * height}")
+
+# F-strings with formatting specifiers
+pi = 3.14159265359
+print(f"Pi to 2 decimal places: {pi:.2f}")
+print(f"Pi in scientific notation: {pi:.2e}")
+
+# Padding and alignment
+for i in range(1, 6):
+    print(f"Number: {i:2d}, Square: {i*i:3d}, Cube: {i**3:4d}")
+
+# Including quotes and braces
+print(f"She said, {name} is {'amazing'!r}")  # !r applies repr()
+print(f"Braces in f-strings: {{ and }}")</code></pre>
+                    </div>
+                </div>
+                
+                <div class="output-header">Output:</div>
+                <div class="example-output">
+My name is Alice and I am 30 years old.
+The area of the triangle is 25.0
+Pi to 2 decimal places: 3.14
+Pi in scientific notation: 3.14e+00
+Number:  1, Square:   1, Cube:    1
+Number:  2, Square:   4, Cube:    8
+Number:  3, Square:   9, Cube:   27
+Number:  4, Square:  16, Cube:   64
+Number:  5, Square:  25, Cube:  125
+She said, Alice is 'amazing'
+Braces in f-strings: { and }
+                </div>
+                
+                <h3>The format() Method</h3>
+                <p>Before f-strings, the <code>format()</code> method was the preferred way to format strings:</p>
+                
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>format_method.py</span>
+                        <div class="buttons">
+                            <div class="button red"></div>
+                            <div class="button yellow"></div>
+                            <div class="button green"></div>
+                        </div>
+                    </div>
+                    <div class="code-content">
+                        <pre><code class="language-python"># Basic format method
+name = "Bob"
+age = 25
+print("My name is {} and I am {} years old.".format(name, age))
+
+# Numbered placeholders
+print("The {1} is {0}.".format("blue", "sky"))  # Positions reversed
+
+# Named placeholders
+print("My name is {name} and I am {age} years old.".format(name="Charlie", age=35))
+
+# Mixed placeholder types
+print("The {animal} jumped over the {item}.".format(item="fence", animal="cow"))
+
+# Formatting options
+print("Pi = {:.5f}".format(3.14159265359))
+print("{:>10}".format("right"))  # Right-aligned in 10-char field
+print("{:<10}".format("left"))   # Left-aligned in 10-char field
+print("{:^10}".format("center")) # Center-aligned in 10-char field
+print("{:*^10}".format("hi"))    # Centered with * padding</code></pre>
+                    </div>
+                </div>
+                
+                <div class="output-header">Output:</div>
+                <div class="example-output">
+My name is Bob and I am 25 years old.
+The sky is blue.
+My name is Charlie and I am 35 years old.
+The cow jumped over the fence.
+Pi = 3.14159
+     right
+left      
+  center  
+***hi*****
+                </div>
+
+                <h3>Classic String Formatting (% Operator)</h3>
+                <p>This is the oldest method, similar to C's printf syntax. Although newer methods are preferred, you might encounter this in older code:</p>
+                
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>percent_formatting.py</span>
+                        <div class="buttons">
+                            <div class="button red"></div>
+                            <div class="button yellow"></div>
+                            <div class="button green"></div>
+                        </div>
+                    </div>
+                    <div class="code-content">
+                        <pre><code class="language-python"># % formatting (older style)
+name = "Dave"
+age = 40
+print("My name is %s and I am %d years old." % (name, age))
+
+# Common format specifiers
+print("Float: %.2f" % 3.14159)
+print("Integer: %5d" % 42)
+print("String: %10s" % "hello")
+
+# Dictionary-based formatting
+data = {"name": "Eve", "age": 45}
+print("%(name)s is %(age)d years old." % data)</code></pre>
+                    </div>
+                </div>
+                
+                <div class="output-header">Output:</div>
+                <div class="example-output">
+My name is Dave and I am 40 years old.
+Float: 3.14
+Integer:    42
+String:      hello
+Eve is 45 years old.
+                </div>
+                
+                <div class="explanation">
+                    <h3><i class="fas fa-lightbulb"></i> Which String Formatting Method to Use?</h3>
+                    <p>For modern Python code (Python 3.6+), f-strings are recommended because they are:</p>
+                    <ul>
+                        <li>More readable and concise</li>
+                        <li>More efficient (they're evaluated at runtime)</li>
+                        <li>Less error-prone (variables are right in the string)</li>
+                    </ul>
+                    <p>The <code>format()</code> method is still useful when you need to create a template string once and reuse it with different values. The % operator is mostly seen in older code.</p>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <h2><i class="fas fa-laptop-code"></i> Practical String Applications</h2>
+                <p>Let's explore some common real-world scenarios where string manipulation is essential:</p>
+                
+                <h3>User Input Validation</h3>
+                <p>When accepting input from users, you often need to validate and clean the data:</p>
+                
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>input_validation.py</span>
+                        <div class="buttons">
+                            <div class="button red"></div>
+                            <div class="button yellow"></div>
+                            <div class="button green"></div>
+                        </div>
+                    </div>
+                    <div class="code-content">
+                        <pre><code class="language-python"># Validating and processing user input
+def validate_username(username):
+    # Remove leading/trailing whitespace
+    username = username.strip()
+    
+    # Check if username meets requirements
+    if len(username) < 3:
+        return False, "Username must be at least 3 characters long."
+    
+    if not username.isalnum():
+        return False, "Username can only contain letters and numbers."
+    
+    return True, username.lower()  # Convert to lowercase for consistency
+
+# Simulating user input
+test_usernames = [
+    "  John  ",
+    "a",
+    "User@123",
+    "ValidUser99"
+]
+
+for username in test_usernames:
+    is_valid, result = validate_username(username)
+    if is_valid:
+        print(f"Valid username: '{username}' → '{result}'")
+    else:
+        print(f"Invalid username: '{username}' - {result}")</code></pre>
+                    </div>
+                </div>
+                
+                <div class="output-header">Output:</div>
+                <div class="example-output">
+Valid username: '  John  ' → 'john'
+Invalid username: 'a' - Username must be at least 3 characters long.
+Invalid username: 'User@123' - Username can only contain letters and numbers.
+Valid username: 'ValidUser99' → 'validuser99'
+                </div>
+                
+                <h3>Text Analysis</h3>
+                <p>Python strings are perfect for analyzing and extracting information from text:</p>
+                
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>text_analysis.py</span>
+                        <div class="buttons">
+                            <div class="button red"></div>
+                            <div class="button yellow"></div>
+                            <div class="button green"></div>
+                        </div>
+                    </div>
+                    <div class="code-content">
+                        <pre><code class="language-python"># Simple text analysis functions
+def analyze_text(text):
+    # Convert to lowercase for consistent analysis
+    text = text.lower()
+    
+    # Basic stats
+    char_count = len(text)
+    word_count = len(text.split())
+    
+    # Count specific characters
+    space_count = text.count(' ')
+    digit_count = sum(c.isdigit() for c in text)
+    
+    # Find most common word (simple approach)
+    words = text.split()
+    word_freq = {}
+    for word in words:
+        # Remove punctuation
+        clean_word = ''.join(c for c in word if c.isalnum())
+        if clean_word:
+            word_freq[clean_word] = word_freq.get(clean_word, 0) + 1
+    
+    most_common = max(word_freq.items(), key=lambda x: x[1]) if word_freq else ("", 0)
+    
+    return {
+        "characters": char_count,
+        "words": word_count,
+        "spaces": space_count,
+        "digits": digit_count,
+        "most_common_word": most_common[0],
+        "most_common_count": most_common[1]
+    }
+
+# Sample text
+sample = "Python is amazing! Python provides many string functions that make text analysis easier. Python 3.9 added even more string methods in 2020."
+
+# Analyze the text
+result = analyze_text(sample)
+
+# Display results
+print("Text Analysis Results:")
+for key, value in result.items():
+    print(f"{key.replace('_', ' ').title()}: {value}")</code></pre>
+                    </div>
+                </div>
+                
+                <div class="output-header">Output:</div>
+                <div class="example-output">
+Text Analysis Results:
+Characters: 123
+Words: 20
+Spaces: 19
+Digits: 2
+Most Common Word: python
+Most Common Count: 3
+                </div>
+                
+                <h3>Building a Simple Template System</h3>
+                <p>Strings are useful for creating template systems that generate dynamic content:</p>
+                
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>template_system.py</span>
+                        <div class="buttons">
+                            <div class="button red"></div>
+                            <div class="button yellow"></div>
+                            <div class="button green"></div>
+                        </div>
+                    </div>
+                    <div class="code-content">
+                        <pre><code class="language-python"># Simple template system
+def render_template(template, **context):
+    """
+    Render a template string with the given context variables.
+    Example: "Hello, {name}!" with context {"name": "John"} becomes "Hello, John!"
+    """
+    return template.format(**context)
+
+# Email template
+email_template = """
+Subject: Welcome to {company_name}!
+
+Dear {customer_name},
+
+Thank you for signing up for our {service_name} service on {signup_date}.
+
+Your account details:
+- Username: {username}
+- Plan: {plan_type}
+- Monthly cost: ${monthly_cost:.2f}
+
+If you have any questions, please contact us at {support_email}.
+
+Best regards,
+The {company_name} Team
+"""
+
+# Customer data
+customer = {
+    "company_name": "iTokyo Academy",
+    "customer_name": "Sarah Johnson",
+    "service_name": "Python Training",
+    "signup_date": "March 10, 2023",
+    "username": "sarah.j",
+    "plan_type": "Premium",
+    "monthly_cost": 49.99,
+    "support_email": "support@iTokyoacademy.com"
+}
+
+# Render the email
+email = render_template(email_template, **customer)
+print(email)</code></pre>
+                    </div>
+                </div>
+                
+                <div class="output-header">Output:</div>
+                <div class="example-output">
+
+Subject: Welcome to iTokyo Academy!
+
+Dear Sarah Johnson,
+
+Thank you for signing up for our Python Training service on March 10, 2023.
+
+Your account details:
+- Username: sarah.j
+- Plan: Premium
+- Monthly cost: $49.99
+
+If you have any questions, please contact us at support@iTokyoacademy.com.
+
+Best regards,
+The iTokyo Academy Team
+                </div>
+                
+                <h3>Creating a Simple Word Processor</h3>
+                <p>Let's create a mini word processor that demonstrates various string manipulation techniques:</p>
+                
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>word_processor.py</span>
+                        <div class="buttons">
+                            <div class="button red"></div>
+                            <div class="button yellow"></div>
+                            <div class="button green"></div>
+                        </div>
+                    </div>
+                    <div class="code-content">
+                        <pre><code class="language-python"># Simple word processor functions
+class TextProcessor:
+    def __init__(self, text=""):
+        self.text = text
+    
+    def set_text(self, text):
+        self.text = text
+        return self
+    
+    def word_count(self):
+        """Count the number of words in the text."""
+        return len(self.text.split())
+    
+    def character_count(self, include_spaces=True):
+        """Count the number of characters in the text."""
+        if include_spaces:
+            return len(self.text)
+        return len(self.text.replace(" ", ""))
+    
+    def find_replace(self, find_str, replace_str):
+        """Replace all occurrences of find_str with replace_str."""
+        self.text = self.text.replace(find_str, replace_str)
+        return self
+    
+    def capitalize_sentences(self):
+        """Capitalize the first letter of each sentence."""
+        sentences = []
+        # Split by period and space, but keep the period
+        parts = self.text.split('. ')
+        for i, part in enumerate(parts):
+            if part:
+                if i < len(parts) - 1:
+                    sentences.append(part.capitalize() + '. ')
+                else:
+                    sentences.append(part.capitalize())
+        self.text = ''.join(sentences)
+        return self
+    
+    def title_case(self):
+        """Convert text to title case (first letter of each word capitalized)."""
+        self.text = self.text.title()
+        return self
+    
+    def add_prefix_to_lines(self, prefix):
+        """Add a prefix to each line of the text."""
+        lines = self.text.split('\n')
+        self.text = '\n'.join(prefix + line for line in lines)
+        return self
+    
+    def wrap_text(self, width=80):
+        """Wrap text to a specified width."""
+        words = self.text.split()
+        lines = []
+        current_line = []
+        current_length = 0
+        
+        for word in words:
+            if current_length + len(word) + len(current_line) <= width:
+                current_line.append(word)
+                current_length += len(word)
+            else:
+                lines.append(' '.join(current_line))
+                current_line = [word]
+                current_length = len(word)
+        
+        if current_line:
+            lines.append(' '.join(current_line))
+        
+        self.text = '\n'.join(lines)
+        return self
+    
+    def get_text(self):
+        """Return the processed text."""
+        return self.text
+
+# Example usage
+sample_text = """python strings are powerful. they allow us to work with text data efficiently. string methods make text processing easy and intuitive. python provides many built-in functions for string manipulation."""
+
+processor = TextProcessor(sample_text)
+
+# Process the text using method chaining
+result = processor.capitalize_sentences() \
+                  .find_replace("python", "Python") \
+                  .wrap_text(width=50) \
+                  .get_text()
+
+print("Processed Text:")
+print(result)</code></pre>
+                    </div>
+                </div>
+                
+                <div class="output-header">Output:</div>
+                <div class="example-output">
+Processed Text:
+Python strings are powerful. They allow us to work
+with text data efficiently. String methods make
+text processing easy and intuitive. Python
+provides many built-in functions for string
+manipulation.
+                </div>
+                
+                <div class="tip-card">
+                    <h3><i class="fas fa-star"></i> Pro Tip</h3>
+                    <p>The pattern of returning <code>self</code> from methods (as seen in the <code>TextProcessor</code> class) enables method chaining, which can make your code more readable and concise. This is a common design pattern in many Python libraries.</p>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <h2><i class="fas fa-exclamation-circle"></i> Common String Pitfalls and Best Practices</h2>
+                <p>When working with strings in Python, there are some common mistakes and challenges that even experienced developers encounter. Here are some tips to help you avoid them:</p>
+                
+                <h3>Performance Considerations</h3>
+                
+                <div class="explanation">
+                    <h3><i class="fas fa-lightbulb"></i> Efficient String Building</h3>
+                    <p><strong>Inefficient:</strong> Building strings by repeatedly concatenating in a loop:</p>
+                    <pre><code class="language-python">result = ""
+for i in range(1000):
+    result += str(i)  # Creates a new string each time</code></pre>
+                    
+                    <p><strong>Efficient:</strong> Using join() or list comprehension:</p>
+                    <pre><code class="language-python">result = ''.join([str(i) for i in range(1000)])  # Creates strings once</code></pre>
+                    
+                    <p>The inefficient method creates a new string object for each iteration, which can be very slow for large loops. The efficient method builds a list first and then joins it in one operation.</p>
+                </div>
+                
+                <h3>Unicode and Encoding Issues</h3>
+                <p>When working with non-ASCII text or reading/writing files, encoding issues can arise:</p>
+                
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>encoding_examples.py</span>
+                        <div class="buttons">
+                            <div class="button red"></div>
+                            <div class="button yellow"></div>
+                            <div class="button green"></div>
+                        </div>
+                    </div>
+                    <div class="code-content">
+                        <pre><code class="language-python"># Working with unicode and encodings
+text_with_emoji = "Python is 🐍 awesome!"
+print("Text with emoji:", text_with_emoji)
+
+# String length vs byte length
+print("String length:", len(text_with_emoji))
+
+# Converting to bytes with different encodings
+utf8_bytes = text_with_emoji.encode('utf-8')
+print("UTF-8 bytes:", utf8_bytes)
+print("UTF-8 byte length:", len(utf8_bytes))
+
+# Reading and writing files with proper encoding
+def write_text_file(filename, content, encoding='utf-8'):
+    with open(filename, 'w', encoding=encoding) as file:
+        file.write(content)
+    print(f"File written with {encoding} encoding.")
+
+def read_text_file(filename, encoding='utf-8'):
+    try:
+        with open(filename, 'r', encoding=encoding) as file:
+            return file.read()
+    except UnicodeDecodeError:
+        print(f"Error: Could not decode file using {encoding} encoding.")
+        return None
+
+# Example usage (commented out to avoid file operations)
+# write_text_file("example.txt", text_with_emoji)
+# content = read_text_file("example.txt")
+# print("Read from file:", content)</code></pre>
+                    </div>
+                </div>
+                
+                <div class="tip-card">
+                    <h3><i class="fas fa-star"></i> Pro Tip</h3>
+                    <p>Always specify the encoding when reading or writing text files, especially if they might contain non-ASCII characters. UTF-8 is a good default choice for most modern applications. If you're working with files from different sources, you may need to handle multiple encodings.</p>
+                </div>
+                
+                <h3>Best Practices Summary</h3>
+                <ul>
+                    <li><strong>Use f-strings for formatting:</strong> They're more readable and efficient than older methods.</li>
+                    <li><strong>Avoid repeated concatenation:</strong> Use join() for building large strings.</li>
+                    <li><strong>Be careful with whitespace:</strong> Use strip() to clean user input.</li>
+                    <li><strong>Always specify encodings:</strong> When reading/writing files, be explicit about character encodings.</li>
+                    <li><strong>Use string methods instead of loops:</strong> Python's built-in string methods are usually faster and cleaner than manual character-by-character operations.</li>
+                    <li><strong>Remember immutability:</strong> Strings can't be changed in place; operations always create new strings.</li>
+                    <li><strong>Validate input:</strong> Always validate and sanitize user input, especially if used in sensitive contexts.</li>
+                </ul>
+            </div>
+            
+            <div class="assignment-section">
+                <div class="floating-elements">
+                    <div class="floating-element one"></div>
+                    <div class="floating-element two"></div>
+                    <div class="floating-element three"></div>
+                    <div class="floating-element four"></div>
+                </div>
+                
+                <h2><i class="fas fa-tasks"></i> Practice Assignments</h2>
+                <p>Complete these assignments to strengthen your understanding of Python strings.</p>
+
+                <div class="assignment-task">
+                    <h3>1. Personal Bio Generator</h3>
+                    <p>Create a program that generates a personalized bio using string operations:</p>
+                    <ul>
+                        <li>Ask the user for their name, age, location, and a hobby</li>
+                        <li>Generate a nicely formatted bio using string methods</li>
+                        <li>Include different formatting options (title case, centered text, etc.)</li>
+                        <li>Add emoji or special characters to make the bio more engaging</li>
+                    </ul>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>Expected Output Format:</span>
+                        </div>
+                        <div class="code-content">
+                            <pre><code class="language-python"># Example output:
+# =============================================
+#                  ABOUT JOHN                  
+# =============================================
+# Name: John Smith
+# Age: 25 years old (born in 1998)
+# Location: Tokyo, Japan
+# Hobby: Playing guitar 🎸
+#
+# John is a 25-year-old music enthusiast from Tokyo.
+# When not playing guitar, you can find John exploring
+# the city's vibrant music scene.
+# =============================================</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="assignment-task">
+                    <h3>2. Text Analyzer Tool</h3>
+                    <p>Create a more advanced version of our text analysis example:</p>
+                    <ul>
+                        <li>Count words, characters, sentences, and paragraphs</li>
+                        <li>Find the five most common words (excluding common words like "the", "a", etc.)</li>
+                        <li>Calculate the average word length and sentence length</li>
+                        <li>Estimate reading time (assuming average reading speed of 200 words per minute)</li>
+                        <li>Display the results in a well-formatted report</li>
+                    </ul>
+                </div>
+
+                <div class="assignment-task">
+                    <h3>3. Password Validator</h3>
+                    <p>Create a program that validates passwords based on these criteria:</p>
+                    <ul>
+                        <li>At least 8 characters long</li>
+                        <li>Contains at least one uppercase letter</li>
+                        <li>Contains at least one lowercase letter</li>
+                        <li>Contains at least one digit</li>
+                        <li>Contains at least one special character (!@#$%^&*)</li>
+                        <li>Doesn't contain the username</li>
+                    </ul>
+                    <p>The program should explain which criteria are not met if the password is invalid.</p>
+                </div>
+
+                <div class="btn">Download Assignment Template</div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fab fa-python"></i>
+                    <span>iTokyo Academy Pvt Ltd</span>
+                </div>
+                <p>Empowering students with practical Python skills since 2023</p>
+                <div class="footer-social">
+                    <a href="https://iTokyoacademy.com" target="_blank" class="social-icon"><i class="fa-solid fa-earth-asia"></i></a>
+                    <a href="https://www.linkedin.com/company/iTokyo-academy/" target="_blank" class="social-icon"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://www.instagram.com/iTokyoacademy/?hl=en" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="https://github.com/Abhinivesh2729/Python-Training" target="_blank" class="social-icon"><i class="fab fa-github"></i></a>
+                </div>
+                <div class="copyright">
+                    &copy; 2025 iTokyo Academy. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+</body>
+</html>
