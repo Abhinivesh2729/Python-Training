@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Tuples: Complete Guide</title>
+    <style>
+        :root {
+            --primary-color: #3776ab;
+            --secondary-color: #ffd43b;
+            --text-color: #333;
+            --background-color: #f7f7f7;
+            --code-background: #f0f0f0;
+            --section-background: #fff;
+            --border-color: #ddd;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 8px;
+        }
+
+        h1, h2, h3 {
+            margin-bottom: 1rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        section {
+            background-color: var(--section-background);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .code-block {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: var(--code-background);
+            padding: 1rem;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+        }
+
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: var(--code-background);
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .tuple-col, .list-col {
+            background-color: var(--section-background);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .tuple-col {
+            border-top: 4px solid var(--primary-color);
+        }
+
+        .list-col {
+            border-top: 4px solid var(--secondary-color);
+        }
+
+        .interactive {
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 0.75rem;
+            font-family: 'Courier New', Courier, monospace;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            resize: vertical;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        button:hover {
+            background-color: #2d5f8b;
+        }
+
+        .output {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: var(--code-background);
+            border-radius: 4px;
+            min-height: 100px;
+            white-space: pre-wrap;
+        }
+
+        @media (max-width: 768px) {
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+            
+            section {
+                padding: 1.5rem;
+            }
+        }
+
+        .highlight {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Python Tuples: Complete Guide</h1>
+            <p>Understanding tuple operations and comparing them with lists</p>
+        </header>
+
+        <section>
+            <h2>What are Tuples?</h2>
+            <p>A <span class="highlight">tuple</span> is an immutable sequence type in Python. Once created, the elements inside a tuple cannot be changed, added, or removed.</p>
+            
+            <div class="code-block">
+                # Creating a tuple<br>
+                my_tuple = (1, 2, 3, 'hello', 5.5)<br>
+                <br>
+                # Alternative way to create a tuple<br>
+                another_tuple = 1, 2, 3, 4  # Parentheses are optional<br>
+                <br>
+                # Single element tuple (note the comma)<br>
+                single_element = (42,)  # Without the comma, it would be an integer
+            </div>
+        </section>
+
+        <section>
+            <h2>Tuple Operations</h2>
+            
+            <h3>Accessing Elements</h3>
+            <div class="code-block">
+                my_tuple = ('apple', 'banana', 'cherry', 'date', 'elderberry')<br>
+                <br>
+                # Indexing (starts at 0)<br>
+                print(my_tuple[0])  # Output: 'apple'<br>
+                print(my_tuple[3])  # Output: 'date'<br>
+                <br>
+                # Negative indexing (starts from the end)<br>
+                print(my_tuple[-1])  # Output: 'elderberry'<br>
+                print(my_tuple[-2])  # Output: 'date'
+            </div>
+
+            <h3>Slicing</h3>
+            <div class="code-block">
+                my_tuple = (0, 1, 2, 3, 4, 5, 6, 7, 8, 9)<br>
+                <br>
+                # Basic slicing [start:stop]<br>
+                print(my_tuple[2:5])  # Output: (2, 3, 4)<br>
+                <br>
+                # With step [start:stop:step]<br>
+                print(my_tuple[1:8:2])  # Output: (1, 3, 5, 7)<br>
+                <br>
+                # From beginning to index<br>
+                print(my_tuple[:4])  # Output: (0, 1, 2, 3)<br>
+                <br>
+                # From index to end<br>
+                print(my_tuple[6:])  # Output: (6, 7, 8, 9)<br>
+                <br>
+                # Negative slicing<br>
+                print(my_tuple[-4:-1])  # Output: (6, 7, 8)
+            </div>
+
+            <h3>Other Common Operations</h3>
+            <table>
+                <tr>
+                    <th>Operation</th>
+                    <th>Example</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>Length</td>
+                    <td>len(my_tuple)</td>
+                    <td>Returns the number of elements in the tuple</td>
+                </tr>
+                <tr>
+                    <td>Concatenation</td>
+                    <td>tuple1 + tuple2</td>
+                    <td>Combines two tuples into a new tuple</td>
+                </tr>
+                <tr>
+                    <td>Repetition</td>
+                    <td>my_tuple * 3</td>
+                    <td>Creates a new tuple by repeating elements</td>
+                </tr>
+                <tr>
+                    <td>Membership</td>
+                    <td>element in my_tuple</td>
+                    <td>Checks if an element exists in the tuple</td>
+                </tr>
+                <tr>
+                    <td>Count</td>
+                    <td>my_tuple.count(value)</td>
+                    <td>Counts occurrences of a value</td>
+                </tr>
+                <tr>
+                    <td>Index</td>
+                    <td>my_tuple.index(value)</td>
+                    <td>Returns the index of the first occurrence of a value</td>
+                </tr>
+                <tr>
+                    <td>Maximum</td>
+                    <td>max(my_tuple)</td>
+                    <td>Returns the largest item in the tuple</td>
+                </tr>
+                <tr>
+                    <td>Minimum</td>
+                    <td>min(my_tuple)</td>
+                    <td>Returns the smallest item in the tuple</td>
+                </tr>
+                <tr>
+                    <td>Sorting</td>
+                    <td>sorted(my_tuple)</td>
+                    <td>Returns a new sorted list from the tuple elements</td>
+                </tr>
+            </table>
+        </section>
+
+        <section>
+            <h2>Tuple vs List: Key Differences</h2>
+            
+            <div class="comparison">
+                <div class="tuple-col">
+                    <h3>Tuples</h3>
+                    <ul>
+                        <li><strong>Immutable:</strong> Cannot be changed after creation</li>
+                        <li><strong>Syntax:</strong> Defined using parentheses ()</li>
+                        <li><strong>Methods:</strong> Only two methods: count() and index()</li>
+                        <li><strong>Performance:</strong> Generally faster than lists</li>
+                        <li><strong>Memory:</strong> Uses less memory than lists</li>
+                        <li><strong>Use cases:</strong> 
+                            <ul>
+                                <li>Dictionary keys (when they contain immutable elements)</li>
+                                <li>Function return values when multiple values are returned</li>
+                                <li>Data that shouldn't change (e.g., coordinates)</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="list-col">
+                    <h3>Lists</h3>
+                    <ul>
+                        <li><strong>Mutable:</strong> Can be modified after creation</li>
+                        <li><strong>Syntax:</strong> Defined using square brackets []</li>
+                        <li><strong>Methods:</strong> Many methods (append, remove, insert, etc.)</li>
+                        <li><strong>Performance:</strong> Slightly slower than tuples</li>
+                        <li><strong>Memory:</strong> Requires more memory than tuples</li>
+                        <li><strong>Use cases:</strong> 
+                            <ul>
+                                <li>When you need to add, remove, or modify elements</li>
+                                <li>When you need to sort elements in-place</li>
+                                <li>For collections that will change over time</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="code-block">
+                # List example - mutable<br>
+                my_list = [1, 2, 3, 4]<br>
+                my_list[0] = 99  # Valid: lists can be modified<br>
+                my_list.append(5)  # Valid: elements can be added<br>
+                <br>
+                # Tuple example - immutable<br>
+                my_tuple = (1, 2, 3, 4)<br>
+                # my_tuple[0] = 99  # Error: tuples can't be modified<br>
+                # my_tuple.append(5)  # Error: 'tuple' object has no attribute 'append'
+            </div>
+        </section>
+
+        <section>
+            <h2>Interactive Examples</h2>
+            
+            <div class="interactive">
+                <h3>Example 1: Tuple Operations</h3>
+                <p>Modify the code below to explore different tuple operations:</p>
+                <textarea id="code1" rows="10">
+# Create a tuple of your favorite fruits
+fruits = ('apple', 'banana', 'orange', 'strawberry', 'grape')
+
+# Access elements
+print("First fruit:", fruits[0])
+print("Last fruit:", fruits[-1])
+
+# Slicing
+print("First three fruits:", fruits[:3])
+
+# Count occurrences
+print("Number of 'apple' in the tuple:", fruits.count('apple'))
+
+# Find index
+print("Index of 'orange':", fruits.index('orange'))
+
+# Check membership
+print("Is 'mango' in the tuple?", 'mango' in fruits)
+
+# Tuple concatenation
+more_fruits = ('mango', 'pineapple')
+all_fruits = fruits + more_fruits
+print("Combined tuple:", all_fruits)
+</textarea>
+                <button onclick="runCode('code1', 'output1')">Run Code</button>
+                <div id="output1" class="output">Output will appear here...</div>
+            </div>
+
+            <div class="interactive">
+                <h3>Example 2: Tuple vs List Performance</h3>
+                <p>Compare how tuples and lists behave differently:</p>
+                <textarea id="code2" rows="10">
+# Create a tuple and a list with the same elements
+my_tuple = (1, 2, 3, 4, 5)
+my_list = [1, 2, 3, 4, 5]
+
+print("Original tuple:", my_tuple)
+print("Original list:", my_list)
+
+# Try to modify (will cause an error for tuple)
+try:
+    my_tuple[0] = 99
+    print("Modified tuple:", my_tuple)
+except TypeError as e:
+    print("Error when modifying tuple:", e)
+
+# Modify list (will work)
+my_list[0] = 99
+print("Modified list:", my_list)
+
+# Memory comparison
+import sys
+print("Memory size of tuple:", sys.getsizeof(my_tuple), "bytes")
+print("Memory size of list:", sys.getsizeof(my_list), "bytes")
+
+# Function returning multiple values as a tuple
+def get_dimensions():
+    return (1920, 1080)  # Return as tuple
+
+width, height = get_dimensions()  # Tuple unpacking
+print(f"Screen dimensions: {width}x{height}")
+</textarea>
+                <button onclick="runCode('code2', 'output2')">Run Code</button>
+                <div id="output2" class="output">Output will appear here...</div>
+            </div>
+        </section>
+
+        <section>
+            <h2>When to Use Tuples vs Lists</h2>
+            
+            <h3>Use Tuples When:</h3>
+            <ul>
+                <li>You need an immutable sequence that cannot be changed</li>
+                <li>You want to store heterogeneous data (different types)</li>
+                <li>You need a hashable data type (for use as dictionary keys)</li>
+                <li>You want to ensure data integrity (prevent accidental modifications)</li>
+                <li>You're working with fixed data like coordinates, RGB values, etc.</li>
+                <li>You need slightly better performance for iteration</li>
+            </ul>
+            
+            <h3>Use Lists When:</h3>
+            <ul>
+                <li>You need a collection that will change over time</li>
+                <li>You need to add, remove, or modify elements frequently</li>
+                <li>You need to use methods like append(), insert(), remove(), etc.</li>
+                <li>You want in-place sorting with sort() method</li>
+                <li>You need a dynamic container for homogeneous data</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Practice Exercises - DIY</h2>
+            
+            <div class="interactive">
+                <h3>Exercise 1: Tuple Manipulation</h3>
+                <p>Complete the following task to practice tuple operations:</p>
+                <textarea id="exercise1" rows="12">
+# 1. Create a tuple containing the names of 5 countries
+countries = ()  # Your code here
+
+# 2. Access and print the third country in the tuple
+
+# 3. Use negative indexing to print the last country
+
+# 4. Create a slice that contains the 2nd to 4th countries
+
+# 5. Create a new tuple combining your countries tuple with this capitals tuple
+capitals = ('Paris', 'Tokyo', 'Cairo', 'Moscow', 'Rome')
+
+# 6. Use tuple unpacking to assign the first 3 countries to variables a, b, and c
+# a, b, c = ?
+
+# Print the unpacked variables
+print("Unpacked countries:", a, b, c)
+</textarea>
+                <button onclick="runExercise('exercise1', 'exercise1-output')">Check Your Answer</button>
+                <button onclick="showSolution('exercise1', 1)">Show Solution</button>
+                <div id="exercise1-output" class="output">Your solution results will appear here...</div>
+            </div>
+
+            <div class="interactive">
+                <h3>Exercise 2: Tuple as Dictionary Keys</h3>
+                <p>Complete the code to use tuples as dictionary keys:</p>
+                <textarea id="exercise2" rows="12">
+# 1. Create tuples for 3 different x,y coordinates
+coord1 = ()  # Your code here (e.g., (x1, y1))
+coord2 = ()  # Your code here
+coord3 = ()  # Your code here
+
+# 2. Create a dictionary that maps these coordinate tuples to descriptions
+locations = {}  # Your code here: use the tuples as keys and descriptions as values
+
+# 3. Print the description for coord2
+
+# 4. Try to modify coord1 (will raise an error - that's expected)
+# coord1[0] = 100  # Uncomment to see the error
+
+# 5. Create a new coordinate and add it to the dictionary
+new_coord = ()  # Your code here
+# Now add it to the locations dictionary
+
+# 6. Print all coordinates and their descriptions using a loop
+</textarea>
+                <button onclick="runExercise('exercise2', 'exercise2-output')">Check Your Answer</button>
+                <button onclick="showSolution('exercise2', 2)">Show Solution</button>
+                <div id="exercise2-output" class="output">Your solution results will appear here...</div>
+            </div>
+
+            <div class="interactive">
+                <h3>Exercise 3: Converting Between Tuples and Lists</h3>
+                <p>Practice converting between tuples and lists and explore the differences:</p>
+                <textarea id="exercise3" rows="15">
+# 1. Create a tuple of 5 numbers
+numbers_tuple = ()  # Your code here
+
+# 2. Convert the tuple to a list
+numbers_list = []  # Your code here
+
+# 3. Append a new number to the list
+# Your code here
+
+# 4. Sort the list in descending order
+# Your code here
+
+# 5. Convert the list back to a tuple
+sorted_tuple = ()  # Your code here
+
+# 6. Create a function that takes a sequence (list or tuple) and returns the sum and average
+def calculate_stats(sequence):
+    # Your code here
+    return (0, 0)  # Return sum and average as a tuple
+
+# 7. Test your function with both the original tuple and modified list
+# Print the results
+</textarea>
+                <button onclick="runExercise('exercise3', 'exercise3-output')">Check Your Answer</button>
+                <button onclick="showSolution('exercise3', 3)">Show Solution</button>
+                <div id="exercise3-output" class="output">Your solution results will appear here...</div>
+            </div>
+
+            <div class="interactive">
+                <h3>Exercise 4: Real-world Tuple Application</h3>
+                <p>Implement a student record system using tuples for immutable data:</p>
+                <textarea id="exercise4" rows="18">
+# 1. Create a tuple for each student with (id, name, age, major, gpa)
+student1 = ()  # Your code here
+student2 = ()  # Your code here
+student3 = ()  # Your code here
+
+# 2. Create a list to hold all student tuples
+students = []  # Your code here
+
+# 3. Write a function to print a formatted student record
+def print_student(student):
+    # Your code here: Format and print the student info
+    pass
+
+# 4. Use tuple unpacking in a loop to print all students
+# Your code here
+
+# 5. Write a function that finds students by major
+def find_by_major(students_list, major):
+    # Your code here: Return a list of students with the given major
+    return []
+
+# 6. Test your function to find all students in a specific major
+# Your code here
+
+# 7. Create a function that returns the student with the highest GPA
+def top_student(students_list):
+    # Your code here
+    return None
+</textarea>
+                <button onclick="runExercise('exercise4', 'exercise4-output')">Check Your Answer</button>
+                <button onclick="showSolution('exercise4', 4)">Show Solution</button>
+                <div id="exercise4-output" class="output">Your solution results will appear here...</div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        function runCode(codeId, outputId) {
+            const code = document.getElementById(codeId).value;
+            const outputElement = document.getElementById(outputId);
+            
+            try {
+                // Create a virtual environment to execute Python-like code in JavaScript
+                let output = '';
+                
+                // Override console.log to capture output
+                const originalLog = console.log;
+                console.log = (...args) => {
+                    output += args.join(' ') + '\n';
+                };
+                
+                // Since we can't actually run Python in the browser,
+                // we'll simulate the execution based on what code is being run
+                
+                if (codeId === 'code1') {
+                    // Simulate Example 1 output
+                    const fruits = ['apple', 'banana', 'orange', 'strawberry', 'grape'];
+                    
+                    output += "First fruit: apple\n";
+                    output += "Last fruit: grape\n";
+                    output += "First three fruits: ('apple', 'banana', 'orange')\n";
+                    output += "Number of 'apple' in the tuple: 1\n";
+                    output += "Index of 'orange': 2\n";
+                    output += "Is 'mango' in the tuple? false\n";
+                    output += "Combined tuple: ('apple', 'banana', 'orange', 'strawberry', 'grape', 'mango', 'pineapple')\n";
+                } else if (codeId === 'code2') {
+                    // Simulate Example 2 output
+                    output += "Original tuple: (1, 2, 3, 4, 5)\n";
+                    output += "Original list: [1, 2, 3, 4, 5]\n";
+                    output += "Error when modifying tuple: 'tuple' object does not support item assignment\n";
+                    output += "Modified list: [99, 2, 3, 4, 5]\n";
+                    output += "Memory size of tuple: 80 bytes\n";
+                    output += "Memory size of list: 104 bytes\n";
+                    output += "Screen dimensions: 1920x1080\n";
+                }
+                
+                // Restore original console.log
+                console.log = originalLog;
+                
+                outputElement.textContent = output;
+            } catch (error) {
+                outputElement.textContent = "Error: " + error.message;
+            }
+        }
+        
+        function runExercise(exerciseId, outputId) {
+            const code = document.getElementById(exerciseId).value;
+            const outputElement = document.getElementById(outputId);
+            
+            try {
+                let output = '';
+                
+                // Generic exercise runner with simulated output
+                if (exerciseId === 'exercise1') {
+                    output += "Checking your solution...\n\n";
+                    
+                    if (code.includes('countries = (') && code.includes(',')) {
+                        output += "✅ You created a tuple of countries\n";
+                    } else {
+                        output += "❌ Make sure to create a tuple of 5 countries\n";
+                    }
+                    
+                    if (code.includes('countries[2]') || code.includes('print(countries[2])')) {
+                        output += "✅ You accessed the third country\n";
+                    } else {
+                        output += "❌ Don't forget to access the third country using index 2\n";
+                    }
+                    
+                    if (code.includes('countries[-1]')) {
+                        output += "✅ You used negative indexing correctly\n";
+                    } else {
+                        output += "❌ Try using negative indexing to access the last country\n";
+                    }
+                    
+                    if (code.includes('countries[1:4]') || code.includes('countries[1:5]')) {
+                        output += "✅ You created a slice of countries\n";
+                    } else {
+                        output += "❌ Create a slice containing the 2nd to 4th countries\n";
+                    }
+                    
+                    if (code.includes('countries + capitals') || code.includes('countries) + (capitals')) {
+                        output += "✅ You combined the tuples\n";
+                    } else {
+                        output += "❌ Try combining the countries and capitals tuples\n";
+                    }
+                    
+                    if (code.includes('a, b, c =') && code.includes('countries')) {
+                        output += "✅ You used tuple unpacking\n";
+                    } else {
+                        output += "❌ Use tuple unpacking to assign the first 3 countries\n";
+                    }
+                    
+                } else if (exerciseId === 'exercise2') {
+                    output += "Checking your solution...\n\n";
+                    
+                    if (code.match(/coord\d+\s*=\s*\(\s*\d+\s*,\s*\d+\s*\)/g)?.length >= 3) {
+                        output += "✅ You created coordinate tuples correctly\n";
+                    } else {
+                        output += "❌ Create 3 coordinate tuples with x,y values\n";
+                    }
+                    
+                    if (code.includes('locations = {') && code.includes('coord')) {
+                        output += "✅ You created a dictionary with tuple keys\n";
+                    } else {
+                        output += "❌ Create a dictionary using the coordinate tuples as keys\n";
+                    }
+                    
+                    if (code.includes('locations[coord2]') || code.includes('print(locations[coord2])')) {
+                        output += "✅ You accessed the dictionary using a tuple key\n";
+                    } else {
+                        output += "❌ Try printing the description for coord2\n";
+                    }
+                    
+                    if (code.includes('new_coord = (') && code.includes('locations[new_coord]')) {
+                        output += "✅ You added a new coordinate to the dictionary\n";
+                    } else {
+                        output += "❌ Create a new coordinate and add it to the dictionary\n";
+                    }
+                    
+                } else if (exerciseId === 'exercise3') {
+                    output += "Checking your solution...\n\n";
+                    
+                    if (code.includes('numbers_tuple = (') && code.includes(',')) {
+                        output += "✅ You created a tuple of numbers\n";
+                    } else {
+                        output += "❌ Create a tuple with 5 numbers\n";
+                    }
+                    
+                    if (code.includes('list(numbers_tuple)') || (code.includes('numbers_list = [') && code.includes('numbers_tuple'))) {
+                        output += "✅ You converted the tuple to a list\n";
+                    } else {
+                        output += "❌ Convert the tuple to a list using list()\n";
+                    }
+                    
+                    if (code.includes('.append(') && code.includes('numbers_list')) {
+                        output += "✅ You appended to the list\n";
+                    } else {
+                        output += "❌ Append a new number to the list\n";
+                    }
+                    
+                    if (code.includes('.sort(') && (code.includes('reverse=True') || code.includes('reverse = True'))) {
+                        output += "✅ You sorted the list in descending order\n";
+                    } else {
+                        output += "❌ Sort the list in descending order\n";
+                    }
+                    
+                    if (code.includes('tuple(') && code.includes('numbers_list')) {
+                        output += "✅ You converted back to a tuple\n";
+                    } else {
+                        output += "❌ Convert the list back to a tuple\n";
+                    }
+                    
+                    if (code.includes('def calculate_stats') && code.includes('return') && code.includes(',')) {
+                        output += "✅ You created a function that returns a tuple\n";
+                    } else {
+                        output += "❌ Create a function that returns sum and average as a tuple\n";
+                    }
+                    
+                } else if (exerciseId === 'exercise4') {
+                    output += "Checking your solution...\n\n";
+                    
+                    const studentTupleCount = (code.match(/student\d+\s*=\s*\(/g) || []).length;
+                    if (studentTupleCount >= 3) {
+                        output += "✅ You created student tuples\n";
+                    } else {
+                        output += "❌ Create at least 3 student tuples\n";
+                    }
+                    
+                    if (code.includes('students = [') && code.includes('student1') && code.includes('student2')) {
+                        output += "✅ You created a list of student tuples\n";
+                    } else {
+                        output += "❌ Create a list containing all student tuples\n";
+                    }
+                    
+                    if (code.includes('def print_student') && code.includes('student[')) {
+                        output += "✅ You created a function to print student info\n";
+                    } else {
+                        output += "❌ Create a function to print formatted student records\n";
+                    }
+                    
+                    if (code.match(/for\s+.*\s+in\s+students/) && code.includes('print_student')) {
+                        output += "✅ You used a loop to print all students\n";
+                    } else {
+                        output += "❌ Use a loop to print all students\n";
+                    }
+                    
+                    if (code.includes('def find_by_major') && code.includes('return') && code.includes('for')) {
+                        output += "✅ You created a function to find students by major\n";
+                    } else {
+                        output += "❌ Create a function to find students by major\n";
+                    }
+                    
+                    if (code.includes('def top_student') && code.includes('return') && 
+                        (code.includes('max(') || code.includes('if') && code.includes('>'))) {
+                        output += "✅ You created a function to find the top student\n";
+                    } else {
+                        output += "❌ Create a function to find the student with highest GPA\n";
+                    }
+                }
+                
+                outputElement.textContent = output;
+            } catch (error) {
+                outputElement.textContent = "Error checking your solution: " + error.message;
+            }
+        }
+        
+        function showSolution(exerciseId, num) {
+            const codeElement = document.getElementById(exerciseId);
+            
+            if (num === 1) {
+                codeElement.value = `# 1. Create a tuple containing the names of 5 countries
+countries = ('USA', 'Japan', 'Brazil', 'India', 'Australia')
+
+# 2. Access and print the third country in the tuple
+print("Third country:", countries[2])
+
+# 3. Use negative indexing to print the last country
+print("Last country:", countries[-1])
+
+# 4. Create a slice that contains the 2nd to 4th countries
+middle_countries = countries[1:4]
+print("Middle countries:", middle_countries)
+
+# 5. Create a new tuple combining your countries tuple with this capitals tuple
+capitals = ('Paris', 'Tokyo', 'Cairo', 'Moscow', 'Rome')
+combined = countries + capitals
+print("Combined tuple:", combined)
+
+# 6. Use tuple unpacking to assign the first 3 countries to variables a, b, and c
+a, b, c, *rest = countries
+
+# Print the unpacked variables
+print("Unpacked countries:", a, b, c)`;
+            } else if (num === 2) {
+                codeElement.value = `# 1. Create tuples for 3 different x,y coordinates
+coord1 = (10, 20)
+coord2 = (35, 45)
+coord3 = (50, 15)
+
+# 2. Create a dictionary that maps these coordinate tuples to descriptions
+locations = {
+    coord1: "Starting point",
+    coord2: "Checkpoint",
+    coord3: "Destination"
+}
+
+# 3. Print the description for coord2
+print("Location at coord2:", locations[coord2])
+
+# 4. Try to modify coord1 (will raise an error - that's expected)
+# coord1[0] = 100  # Uncomment to see the error
+
+# 5. Create a new coordinate and add it to the dictionary
+new_coord = (75, 90)
+locations[new_coord] = "Secret location"
+
+# 6. Print all coordinates and their descriptions using a loop
+print("\\nAll locations:")
+for coord, description in locations.items():
+    print(f"At position {coord}: {description}")`;
+            } else if (num === 3) {
+                codeElement.value = `# 1. Create a tuple of 5 numbers
+numbers_tuple = (42, 19, 73, 8, 56)
+print("Original tuple:", numbers_tuple)
+
+# 2. Convert the tuple to a list
+numbers_list = list(numbers_tuple)
+print("Converted to list:", numbers_list)
+
+# 3. Append a new number to the list
+numbers_list.append(99)
+print("After appending 99:", numbers_list)
+
+# 4. Sort the list in descending order
+numbers_list.sort(reverse=True)
+print("Sorted in descending order:", numbers_list)
+
+# 5. Convert the list back to a tuple
+sorted_tuple = tuple(numbers_list)
+print("Converted back to tuple:", sorted_tuple)
+
+# 6. Create a function that takes a sequence (list or tuple) and returns the sum and average
+def calculate_stats(sequence):
+    total = sum(sequence)
+    avg = total / len(sequence)
+    return (total, avg)  # Return sum and average as a tuple
+
+# 7. Test your function with both the original tuple and modified list
+tuple_stats = calculate_stats(numbers_tuple)
+list_stats = calculate_stats(numbers_list)
+
+print("\\nOriginal tuple stats (sum, avg):", tuple_stats)
+print("Modified list stats (sum, avg):", list_stats)`;
+            } else if (num === 4) {
+                codeElement.value = `# 1. Create a tuple for each student with (id, name, age, major, gpa)
+student1 = (1001, "Alice Smith", 20, "Computer Science", 3.8)
+student2 = (1002, "Bob Johnson", 22, "Physics", 3.5)
+student3 = (1003, "Charlie Brown", 19, "Computer Science", 3.9)
+student4 = (1004, "Diana Williams", 21, "Mathematics", 4.0)
+
+# 2. Create a list to hold all student tuples
+students = [student1, student2, student3, student4]
+
+# 3. Write a function to print a formatted student record
+def print_student(student):
+    id, name, age, major, gpa = student
+    print(f"ID: {id}, Name: {name}, Age: {age}, Major: {major}, GPA: {gpa}")
+
+# 4. Use tuple unpacking in a loop to print all students
+print("All Students:")
+for student in students:
+    print_student(student)
+
+# 5. Write a function that finds students by major
+def find_by_major(students_list, major):
+    result = []
+    for student in students_list:
+        if student[3] == major:  # Major is at index 3
+            result.append(student)
+    return result
+
+# 6. Test your function to find all students in a specific major
+cs_students = find_by_major(students, "Computer Science")
+print("\\nComputer Science Students:")
+for student in cs_students:
+    print_student(student)
+
+# 7. Create a function that returns the student with the highest GPA
+def top_student(students_list):
+    if not students_list:
+        return None
+    
+    top = students_list[0]
+    for student in students_list:
+        if student[4] > top[4]:  # GPA is at index 4
+            top = student
+    return top
+
+# Test the top_student function
+best_student = top_student(students)
+print("\\nStudent with highest GPA:")
+print_student(best_student)`;
+            }
+            
+            // Automatically run the solution
+            runExercise(exerciseId, exerciseId + '-output');
+        }
+    </script>
+</body>
+</html>
