@@ -1,0 +1,1721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Sets and Dictionaries</title>
+    <style>
+        :root {
+            --primary-color: #306998;
+            --secondary-color: #FFD43B;
+            --dark-color: #1a1a1a;
+            --light-color: #f4f4f4;
+            --code-bg: #f0f0f0;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            background-color: var(--light-color);
+            overflow-x: hidden;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            margin: 1.5rem 0 1rem;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        h3 {
+            font-size: 1.3rem;
+            margin: 1rem 0;
+            color: var(--primary-color);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        
+        .slide {
+            padding: 2rem;
+            margin: 2rem 0;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        pre {
+            background-color: var(--code-bg);
+            padding: 1rem;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        
+        code {
+            font-family: 'Courier New', Courier, monospace;
+        }
+        
+        .output {
+            background-color: #e9f5ff;
+            border-left: 4px solid var(--primary-color);
+            padding: 0.5rem 1rem;
+            margin: 1rem 0;
+        }
+        
+        .note {
+            background-color: #fffde7;
+            border-left: 4px solid var(--secondary-color);
+            padding: 0.5rem 1rem;
+            margin: 1rem 0;
+        }
+        
+        .example {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .example-content {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            .slide {
+                padding: 1.5rem;
+                margin: 1rem 0;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.75rem;
+            }
+            
+            .slide {
+                padding: 1rem;
+            }
+            
+            pre {
+                font-size: 0.9rem;
+                padding: 0.75rem;
+            }
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin: 2rem 0;
+        }
+        
+        .nav-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-button:hover {
+            background-color: #204a6f;
+        }
+        
+        .nav-button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+        #toc {
+            background-color: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 5px;
+            margin: 2rem 0;
+        }
+        
+        #toc ul {
+            list-style-type: none;
+        }
+        
+        #toc a {
+            color: var(--primary-color);
+            text-decoration: none;
+            display: block;
+            padding: 0.5rem 0;
+            transition: transform 0.2s;
+        }
+        
+        #toc a:hover {
+            transform: translateX(5px);
+            color: #204a6f;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Python Sets and Dictionaries</h1>
+        <p>Essential data structures for Python programming</p>
+    </header>
+    
+    <div class="container">
+        <div id="toc" class="slide">
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><a href="#introduction">Introduction</a></li>
+                <li><a href="#sets">Sets in Python</a></li>
+                <li><a href="#set-operations">Set Operations</a></li>
+                <li><a href="#set-union">Union</a></li>
+                <li><a href="#set-intersection">Intersection</a></li>
+                <li><a href="#set-difference">Difference</a></li>
+                <li><a href="#set-methods">Other Set Methods</a></li>
+                <li><a href="#dictionaries">Dictionaries in Python</a></li>
+                <li><a href="#creating-dictionaries">Creating Dictionaries</a></li>
+                <li><a href="#accessing-values">Accessing Dictionary Values</a></li>
+                <li><a href="#modifying-dictionaries">Modifying Dictionaries</a></li>
+                <li><a href="#dictionary-methods">Dictionary Methods</a></li>
+                <li><a href="#practical-examples">Practical Examples</a></li>
+            </ul>
+        </div>
+        
+        <div id="introduction" class="slide">
+            <h2>Introduction</h2>
+            <p>Today we'll explore two important data structures in Python:</p>
+            <ul>
+                <li><strong>Sets</strong> - Unordered collections of unique elements</li>
+                <li><strong>Dictionaries</strong> - Key-value pairs for efficient data lookup</li>
+            </ul>
+            <p>Both are essential tools in your Python programming toolkit!</p>
+        </div>
+        
+        <div id="sets" class="slide">
+            <h2>Sets in Python</h2>
+            <p>A set is an unordered collection of unique elements.</p>
+            
+            <h3>Key Characteristics:</h3>
+            <ul>
+                <li>Unordered (elements have no index)</li>
+                <li>Mutable (can be changed after creation)</li>
+                <li>No duplicate elements</li>
+                <li>Can contain different data types (except mutable types like lists or dictionaries)</li>
+            </ul>
+            
+            <h3>Creating Sets:</h3>
+            <div class="example">
+                <pre><code># Using curly braces
+fruits = {"apple", "banana", "cherry"}
+
+# Using the set() constructor
+colors = set(["red", "green", "blue"])
+
+# Creating an empty set
+empty_set = set()  # Note: {} creates an empty dictionary, not a set!
+
+print(fruits)
+print(colors)
+print(empty_set)</code></pre>
+                <div class="output">
+                    {'apple', 'banana', 'cherry'}<br>
+                    {'red', 'green', 'blue'}<br>
+                    set()
+                </div>
+            </div>
+            
+            <div class="note">
+                <p><strong>Important:</strong> Sets don't maintain insertion order. The order of elements may change.</p>
+            </div>
+        </div>
+        
+        <div id="set-operations" class="slide">
+            <h2>Set Operations</h2>
+            <p>Sets in Python support mathematical set operations like union, intersection, and difference.</p>
+            
+            <p>For our examples, let's use these sets:</p>
+            <pre><code>A = {1, 2, 3, 4, 5}
+B = {4, 5, 6, 7, 8}</code></pre>
+            
+            <div class="example-content">
+                <p>Visual representation:</p>
+                <ul>
+                    <li>Set A: {1, 2, 3, 4, 5}</li>
+                    <li>Set B: {4, 5, 6, 7, 8}</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div id="set-union" class="slide">
+            <h2>Union Operation</h2>
+            <p>Union combines all elements from both sets (without duplicates).</p>
+            
+            <h3>Two ways to perform union:</h3>
+            <div class="example">
+                <pre><code>A = {1, 2, 3, 4, 5}
+B = {4, 5, 6, 7, 8}
+
+# Using the | operator
+union_result = A | B
+
+# Using the union() method
+union_result2 = A.union(B)
+
+print(union_result)
+print(union_result2)</code></pre>
+                <div class="output">
+                    {1, 2, 3, 4, 5, 6, 7, 8}<br>
+                    {1, 2, 3, 4, 5, 6, 7, 8}
+                </div>
+            </div>
+            
+            <div class="note">
+                <p>Union operation gives us all elements that are in either set A OR set B (or both).</p>
+            </div>
+        </div>
+        
+        <div id="set-intersection" class="slide">
+            <h2>Intersection Operation</h2>
+            <p>Intersection gives elements that are common to both sets.</p>
+            
+            <h3>Two ways to perform intersection:</h3>
+            <div class="example">
+                <pre><code>A = {1, 2, 3, 4, 5}
+B = {4, 5, 6, 7, 8}
+
+# Using the & operator
+intersection_result = A & B
+
+# Using the intersection() method
+intersection_result2 = A.intersection(B)
+
+print(intersection_result)
+print(intersection_result2)</code></pre>
+                <div class="output">
+                    {4, 5}<br>
+                    {4, 5}
+                </div>
+            </div>
+            
+            <div class="note">
+                <p>Intersection operation gives us elements that are in both set A AND set B.</p>
+            </div>
+        </div>
+        
+        <div id="set-difference" class="slide">
+            <h2>Difference Operation</h2>
+            <p>Difference gives elements that are in one set but not in the other.</p>
+            
+            <h3>Two ways to perform difference:</h3>
+            <div class="example">
+                <pre><code>A = {1, 2, 3, 4, 5}
+B = {4, 5, 6, 7, 8}
+
+# A - B: Elements in A but not in B
+diff_result1 = A - B
+
+# Using the difference() method
+diff_result2 = A.difference(B)
+
+print(diff_result1)
+print(diff_result2)
+
+# B - A: Elements in B but not in A
+diff_result3 = B - A
+diff_result4 = B.difference(A)
+
+print(diff_result3)
+print(diff_result4)</code></pre>
+                <div class="output">
+                    {1, 2, 3}<br>
+                    {1, 2, 3}<br>
+                    {6, 7, 8}<br>
+                    {6, 7, 8}
+                </div>
+            </div>
+            
+            <div class="note">
+                <p>The order matters in difference operations: A - B is not the same as B - A.</p>
+            </div>
+        </div>
+        
+        <div id="set-methods" class="slide">
+            <h2>Other Set Methods</h2>
+            <p>Sets have many other useful methods:</p>
+            
+            <table>
+                <tr>
+                    <th>Method</th>
+                    <th>Description</th>
+                    <th>Example</th>
+                </tr>
+                <tr>
+                    <td>add()</td>
+                    <td>Adds an element to the set</td>
+                    <td>fruits.add("orange")</td>
+                </tr>
+                <tr>
+                    <td>remove()</td>
+                    <td>Removes an element (raises error if not present)</td>
+                    <td>fruits.remove("apple")</td>
+                </tr>
+                <tr>
+                    <td>discard()</td>
+                    <td>Removes an element if present (no error if not found)</td>
+                    <td>fruits.discard("banana")</td>
+                </tr>
+                <tr>
+                    <td>pop()</td>
+                    <td>Removes and returns an arbitrary element</td>
+                    <td>item = fruits.pop()</td>
+                </tr>
+                <tr>
+                    <td>clear()</td>
+                    <td>Removes all elements</td>
+                    <td>fruits.clear()</td>
+                </tr>
+                <tr>
+                    <td>symmetric_difference()</td>
+                    <td>Elements in either set, but not in both</td>
+                    <td>A.symmetric_difference(B)</td>
+                </tr>
+                <tr>
+                    <td>issubset()</td>
+                    <td>Returns True if set is subset of another</td>
+                    <td>A.issubset(B)</td>
+                </tr>
+                <tr>
+                    <td>issuperset()</td>
+                    <td>Returns True if set contains another</td>
+                    <td>A.issuperset(B)</td>
+                </tr>
+            </table>
+            
+            <div class="example">
+                <pre><code>fruits = {"apple", "banana", "cherry"}
+fruits.add("orange")
+print(fruits)
+
+fruits.remove("banana")
+print(fruits)
+
+# Symmetric difference (elements in either set, but not in both)
+A = {1, 2, 3, 4, 5}
+B = {4, 5, 6, 7, 8}
+sym_diff = A ^ B  # or A.symmetric_difference(B)
+print(sym_diff)</code></pre>
+                <div class="output">
+                    {'apple', 'banana', 'cherry', 'orange'}<br>
+                    {'apple', 'cherry', 'orange'}<br>
+                    {1, 2, 3, 6, 7, 8}
+                </div>
+            </div>
+        </div>
+        
+        <div id="dictionaries" class="slide">
+            <h2>Dictionaries in Python</h2>
+            <p>A dictionary is a collection of key-value pairs.</p>
+            
+            <h3>Key Characteristics:</h3>
+            <ul>
+                <li>Keys must be unique and immutable (strings, numbers, tuples)</li>
+                <li>Values can be any data type</li>
+                <li>Ordered (as of Python 3.7+)</li>
+                <li>Mutable (can be changed after creation)</li>
+            </ul>
+            
+            <div class="note">
+                <p><strong>Note:</strong> Before Python 3.7, dictionaries were unordered. In modern Python, they maintain insertion order.</p>
+            </div>
+        </div>
+        
+        <div id="creating-dictionaries" class="slide">
+            <h2>Creating Dictionaries</h2>
+            <p>There are multiple ways to create dictionaries:</p>
+            
+            <div class="example">
+                <pre><code># Using curly braces with key-value pairs
+student = {
+    "name": "John",
+    "age": 21,
+    "courses": ["Math", "CS", "Physics"]
+}
+
+# Using the dict() constructor
+person = dict(name="Alice", age=25, city="New York")
+
+# Creating an empty dictionary
+empty_dict = {}  # or dict()
+
+print(student)
+print(person)
+print(empty_dict)</code></pre>
+                <div class="output">
+                    {'name': 'John', 'age': 21, 'courses': ['Math', 'CS', 'Physics']}<br>
+                    {'name': 'Alice', 'age': 25, 'city': 'New York'}<br>
+                    {}
+                </div>
+            </div>
+            
+            <div class="example">
+                <pre><code># Using dict() with a list of tuples
+items = dict([
+    ("apple", 1.5),
+    ("banana", 0.75),
+    ("orange", 1.25)
+])
+
+print(items)</code></pre>
+                <div class="output">
+                    {'apple': 1.5, 'banana': 0.75, 'orange': 1.25}
+                </div>
+            </div>
+        </div>
+        
+        <div id="accessing-values" class="slide">
+            <h2>Accessing Dictionary Values</h2>
+            <p>There are several ways to access values in a dictionary:</p>
+            
+            <div class="example">
+                <pre><code>student = {
+    "name": "John",
+    "age": 21,
+    "courses": ["Math", "CS", "Physics"]
+}
+
+# Using square bracket notation
+print(student["name"])
+
+# Using the get() method (safer, returns None if key doesn't exist)
+print(student.get("age"))
+
+# Using get() with a default value
+print(student.get("grade", "N/A"))  # Key doesn't exist, returns default</code></pre>
+                <div class="output">
+                    John<br>
+                    21<br>
+                    N/A
+                </div>
+            </div>
+            
+            <div class="note">
+                <p><strong>Important:</strong> Using square brackets with a non-existent key raises a KeyError. The get() method is safer for keys that might not exist.</p>
+            </div>
+        </div>
+        
+        <div id="modifying-dictionaries" class="slide">
+            <h2>Modifying Dictionaries</h2>
+            <p>Dictionaries are mutable and can be modified in various ways:</p>
+            
+            <div class="example">
+                <pre><code>student = {
+    "name": "John",
+    "age": 21,
+    "courses": ["Math", "CS"]
+}
+
+# Adding or updating a key-value pair
+student["age"] = 22
+student["gpa"] = 3.8
+
+print(student)
+
+# Adding a new course to the list
+student["courses"].append("Biology")
+print(student["courses"])
+
+# Removing a key-value pair with pop() or del
+removed_value = student.pop("gpa")
+print(f"Removed GPA: {removed_value}")
+print(student)
+
+del student["age"]
+print(student)</code></pre>
+                <div class="output">
+                    {'name': 'John', 'age': 22, 'courses': ['Math', 'CS'], 'gpa': 3.8}<br>
+                    ['Math', 'CS', 'Biology']<br>
+                    Removed GPA: 3.8<br>
+                    {'name': 'John', 'age': 22, 'courses': ['Math', 'CS', 'Biology']}<br>
+                    {'name': 'John', 'courses': ['Math', 'CS', 'Biology']}
+                </div>
+            </div>
+        </div>
+        
+        <div id="dictionary-methods" class="slide">
+            <h2>Dictionary Methods</h2>
+            <p>Python dictionaries come with many useful methods:</p>
+            
+            <table>
+                <tr>
+                    <th>Method</th>
+                    <th>Description</th>
+                    <th>Example</th>
+                </tr>
+                <tr>
+                    <td>keys()</td>
+                    <td>Returns view of all keys</td>
+                    <td>student.keys()</td>
+                </tr>
+                <tr>
+                    <td>values()</td>
+                    <td>Returns view of all values</td>
+                    <td>student.values()</td>
+                </tr>
+                <tr>
+                    <td>items()</td>
+                    <td>Returns view of all key-value pairs as tuples</td>
+                    <td>student.items()</td>
+                </tr>
+                <tr>
+                    <td>update()</td>
+                    <td>Updates dictionary with key-value pairs from another</td>
+                    <td>student.update({"grade": "A", "year": 2})</td>
+                </tr>
+                <tr>
+                    <td>clear()</td>
+                    <td>Removes all items</td>
+                    <td>student.clear()</td>
+                </tr>
+                <tr>
+                    <td>copy()</td>
+                    <td>Returns a shallow copy</td>
+                    <td>student_copy = student.copy()</td>
+                </tr>
+                <tr>
+                    <td>setdefault()</td>
+                    <td>Returns value for key, or sets default if key doesn't exist</td>
+                    <td>student.setdefault("grade", "B")</td>
+                </tr>
+            </table>
+            
+            <div class="example">
+                <pre><code>student = {
+    "name": "John",
+    "age": 21,
+    "courses": ["Math", "CS", "Physics"]
+}
+
+# Iterating through keys
+print("Keys:")
+for key in student.keys():
+    print(key)
+
+# Iterating through values
+print("\nValues:")
+for value in student.values():
+    print(value)
+
+# Iterating through key-value pairs
+print("\nItems (key-value pairs):")
+for key, value in student.items():
+    print(f"{key}: {value}")</code></pre>
+                <div class="output">
+                    Keys:<br>
+                    name<br>
+                    age<br>
+                    courses<br><br>
+                    Values:<br>
+                    John<br>
+                    21<br>
+                    ['Math', 'CS', 'Physics']<br><br>
+                    Items (key-value pairs):<br>
+                    name: John<br>
+                    age: 21<br>
+                    courses: ['Math', 'CS', 'Physics']
+                </div>
+            </div>
+        </div>
+        
+        <div id="practical-examples" class="slide">
+            <h2>Practical Examples</h2>
+            
+            <h3>Example 1: Counting Word Frequency</h3>
+            <div class="example">
+                <pre><code>def word_frequency(text):
+    words = text.lower().split()
+    frequency = {}
+    
+    for word in words:
+        if word in frequency:
+            frequency[word] += 1
+        else:
+            frequency[word] = 1
+    
+    return frequency
+
+text = "apple banana apple cherry banana apple"
+result = word_frequency(text)
+print(result)</code></pre>
+                <div class="output">
+                    {'apple': 3, 'banana': 2, 'cherry': 1}
+                </div>
+            </div>
+            
+            <h3>Example 2: Finding Common Elements Using Sets</h3>
+            <div class="example">
+                <pre><code>def find_common_elements(list1, list2):
+    # Convert lists to sets to remove duplicates
+    set1 = set(list1)
+    set2 = set(list2)
+    
+    # Find common elements (intersection)
+    common = set1 & set2
+    
+    return common
+
+fruits1 = ["apple", "banana", "cherry", "apple", "orange"]
+fruits2 = ["banana", "kiwi", "orange", "pear"]
+
+common_fruits = find_common_elements(fruits1, fruits2)
+print(common_fruits)</code></pre>
+                <div class="output">
+                    {'banana', 'orange'}
+                </div>
+            </div>
+            
+            <h3>Example 3: Merging Dictionaries</h3>
+            <div class="example">
+                <pre><code>student_info = {
+    "name": "John",
+    "age": 21
+}
+
+student_grades = {
+    "Math": "A",
+    "Physics": "B+",
+    "CS": "A-"
+}
+
+# Method 1: Using update()
+student_complete = student_info.copy()
+student_complete.update(student_grades)
+print(student_complete)
+
+# Method 2: Using dictionary unpacking (Python 3.5+)
+student_complete2 = {**student_info, **student_grades}
+print(student_complete2)
+
+# Method 3: Using the | operator (Python 3.9+)
+# student_complete3 = student_info | student_grades
+# print(student_complete3)</code></pre>
+                <div class="output">
+                    {'name': 'John', 'age': 21, 'Math': 'A', 'Physics': 'B+', 'CS': 'A-'}<br>
+                    {'name': 'John', 'age': 21, 'Math': 'A', 'Physics': 'B+', 'CS': 'A-'}
+                </div>
+            </div>
+        </div>
+        
+        <div class="slide">
+            <h2>Summary</h2>
+            <h3>Sets:</h3>
+            <ul>
+                <li>Unordered collection of unique elements</li>
+                <li>Efficient membership testing</li>
+                <li>Mathematical operations (union, intersection, difference)</li>
+                <li>Use when you need to ensure uniqueness or perform set operations</li>
+            </ul>
+            
+            <h3>Dictionaries:</h3>
+            <ul>
+                <li>Key-value pairs for efficient data lookup</li>
+                <li>Keys must be unique and immutable</li>
+                <li>Values can be any data type</li>
+                <li>Use when you need fast lookup by a key</li>
+            </ul>
+            
+            <div class="note">
+                <p><strong>Practice makes perfect!</strong> Try to incorporate sets and dictionaries into your projects to become more familiar with them.</p>
+            </div>
+        </div>
+        
+        <div class="nav-buttons">
+            <button id="prevBtn" class="nav-button">Previous</button>
+            <span id="slideCounter">Slide 1 of 13</span>
+            <button id="nextBtn" class="nav-button">Next</button>
+        </div>
+    </div>
+    
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const slideCounter = document.getElementById('slideCounter');
+        
+        function showSlide(index) {
+            // Hide all slides
+            slides.forEach(slide => {
+                slide.style.display = 'none';
+            });
+            
+            // Show the current slide
+            slides[index].style.display = 'block';
+            
+            // Update slide counter
+            slideCounter.textContent = `Slide ${index + 1} of ${slides.length}`;
+            
+            // Update button states
+            prevBtn.disabled = index === 0;
+            nextBtn.disabled = index === slides.length - 1;
+            
+            // Scroll to top of slide
+            window.scrollTo(0, slides[index].offsetTop - 20);
+        }
+        
+        // Event listeners for navigation buttons
+        prevBtn.addEventListener('click', () => {
+            if (currentSlide > 0) {
+                currentSlide--;
+                showSlide(currentSlide);
+            }
+        });
+        
+        nextBtn.addEventListener('click', () => {
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                showSlide(currentSlide);
+            }
+        });
+        
+        // Handle keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft' && currentSlide > 0) {
+                currentSlide--;
+                showSlide(currentSlide);
+            } else if (e.key === 'ArrowRight' && currentSlide < slides.length - 1) {
+                currentSlide++;
+                showSlide(currentSlide);
+            }
+        });
+        
+        // Initialize the first slide
+        showSlide(currentSlide);
+        
+        // Add click handlers for TOC links
+        document.querySelectorAll('#toc a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                const targetSlide = Array.from(slides).findIndex(slide => slide.id === targetId);
+                if (targetSlide !== -1) {
+                    currentSlide = targetSlide;
+                    showSlide(currentSlide);
+                }
+            });
+        });
+    </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Sets and Dictionaries</title>
+    <style>
+        :root {
+            --primary-color: #306998;
+            --secondary-color: #FFD43B;
+            --dark-color: #1a1a1a;
+            --light-color: #f4f4f4;
+            --code-bg: #f0f0f0;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            background-color: var(--light-color);
+            overflow-x: hidden;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            margin: 1.5rem 0 1rem;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        h3 {
+            font-size: 1.3rem;
+            margin: 1rem 0;
+            color: var(--primary-color);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        
+        .slide {
+            padding: 2rem;
+            margin: 2rem 0;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        pre {
+            background-color: var(--code-bg);
+            padding: 1rem;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        
+        code {
+            font-family: 'Courier New', Courier, monospace;
+        }
+        
+        .output {
+            background-color: #e9f5ff;
+            border-left: 4px solid var(--primary-color);
+            padding: 0.5rem 1rem;
+            margin: 1rem 0;
+        }
+        
+        .note {
+            background-color: #fffde7;
+            border-left: 4px solid var(--secondary-color);
+            padding: 0.5rem 1rem;
+            margin: 1rem 0;
+        }
+        
+        .example {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .example-content {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            .slide {
+                padding: 1.5rem;
+                margin: 1rem 0;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.75rem;
+            }
+            
+            .slide {
+                padding: 1rem;
+            }
+            
+            pre {
+                font-size: 0.9rem;
+                padding: 0.75rem;
+            }
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin: 2rem 0;
+        }
+        
+        .nav-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-button:hover {
+            background-color: #204a6f;
+        }
+        
+        .nav-button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+        #toc {
+            background-color: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 5px;
+            margin: 2rem 0;
+        }
+        
+        #toc ul {
+            list-style-type: none;
+        }
+        
+        #toc a {
+            color: var(--primary-color);
+            text-decoration: none;
+            display: block;
+            padding: 0.5rem 0;
+            transition: transform 0.2s;
+        }
+        
+        #toc a:hover {
+            transform: translateX(5px);
+            color: #204a6f;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Python Sets and Dictionaries</h1>
+        <p>Essential data structures for Python programming</p>
+    </header>
+    
+    <div class="container">
+        <div id="toc" class="slide">
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><a href="#introduction">Introduction</a></li>
+                <li><a href="#sets">Sets in Python</a></li>
+                <li><a href="#set-operations">Set Operations</a></li>
+                <li><a href="#set-union">Union</a></li>
+                <li><a href="#set-intersection">Intersection</a></li>
+                <li><a href="#set-difference">Difference</a></li>
+                <li><a href="#set-methods">Other Set Methods</a></li>
+                <li><a href="#dictionaries">Dictionaries in Python</a></li>
+                <li><a href="#creating-dictionaries">Creating Dictionaries</a></li>
+                <li><a href="#accessing-values">Accessing Dictionary Values</a></li>
+                <li><a href="#modifying-dictionaries">Modifying Dictionaries</a></li>
+                <li><a href="#dictionary-methods">Dictionary Methods</a></li>
+                <li><a href="#practical-examples">Practical Examples</a></li>
+            </ul>
+        </div>
+        
+        <div id="introduction" class="slide">
+            <h2>Introduction</h2>
+            <p>Today we'll explore two important data structures in Python:</p>
+            <ul>
+                <li><strong>Sets</strong> - Unordered collections of unique elements</li>
+                <li><strong>Dictionaries</strong> - Key-value pairs for efficient data lookup</li>
+            </ul>
+            <p>Both are essential tools in your Python programming toolkit!</p>
+        </div>
+        
+        <div id="sets" class="slide">
+            <h2>Sets in Python</h2>
+            <p>A set is an unordered collection of unique elements.</p>
+            
+            <h3>Key Characteristics:</h3>
+            <ul>
+                <li>Unordered (elements have no index)</li>
+                <li>Mutable (can be changed after creation)</li>
+                <li>No duplicate elements</li>
+                <li>Can contain different data types (except mutable types like lists or dictionaries)</li>
+            </ul>
+            
+            <h3>Creating Sets:</h3>
+            <div class="example">
+                <pre><code># Using curly braces
+fruits = {"apple", "banana", "cherry"}
+
+# Using the set() constructor
+colors = set(["red", "green", "blue"])
+
+# Creating an empty set
+empty_set = set()  # Note: {} creates an empty dictionary, not a set!
+
+print(fruits)
+print(colors)
+print(empty_set)</code></pre>
+                <div class="output">
+                    {'apple', 'banana', 'cherry'}<br>
+                    {'red', 'green', 'blue'}<br>
+                    set()
+                </div>
+            </div>
+            
+            <div class="note">
+                <p><strong>Important:</strong> Sets don't maintain insertion order. The order of elements may change.</p>
+            </div>
+        </div>
+        
+        <div id="set-operations" class="slide">
+            <h2>Set Operations</h2>
+            <p>Sets in Python support mathematical set operations like union, intersection, and difference.</p>
+            
+            <p>For our examples, let's use these sets:</p>
+            <pre><code>A = {1, 2, 3, 4, 5}
+B = {4, 5, 6, 7, 8}</code></pre>
+            
+            <div class="example-content">
+                <p>Visual representation:</p>
+                <ul>
+                    <li>Set A: {1, 2, 3, 4, 5}</li>
+                    <li>Set B: {4, 5, 6, 7, 8}</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div id="set-union" class="slide">
+            <h2>Union Operation</h2>
+            <p>Union combines all elements from both sets (without duplicates).</p>
+            
+            <h3>Two ways to perform union:</h3>
+            <div class="example">
+                <pre><code>A = {1, 2, 3, 4, 5}
+B = {4, 5, 6, 7, 8}
+
+# Using the | operator
+union_result = A | B
+
+# Using the union() method
+union_result2 = A.union(B)
+
+print(union_result)
+print(union_result2)</code></pre>
+                <div class="output">
+                    {1, 2, 3, 4, 5, 6, 7, 8}<br>
+                    {1, 2, 3, 4, 5, 6, 7, 8}
+                </div>
+            </div>
+            
+            <div class="note">
+                <p>Union operation gives us all elements that are in either set A OR set B (or both).</p>
+            </div>
+        </div>
+        
+        <div id="set-intersection" class="slide">
+            <h2>Intersection Operation</h2>
+            <p>Intersection gives elements that are common to both sets.</p>
+            
+            <h3>Two ways to perform intersection:</h3>
+            <div class="example">
+                <pre><code>A = {1, 2, 3, 4, 5}
+B = {4, 5, 6, 7, 8}
+
+# Using the & operator
+intersection_result = A & B
+
+# Using the intersection() method
+intersection_result2 = A.intersection(B)
+
+print(intersection_result)
+print(intersection_result2)</code></pre>
+                <div class="output">
+                    {4, 5}<br>
+                    {4, 5}
+                </div>
+            </div>
+            
+            <div class="note">
+                <p>Intersection operation gives us elements that are in both set A AND set B.</p>
+            </div>
+        </div>
+        
+        <div id="set-difference" class="slide">
+            <h2>Difference Operation</h2>
+            <p>Difference gives elements that are in one set but not in the other.</p>
+            
+            <h3>Two ways to perform difference:</h3>
+            <div class="example">
+                <pre><code>A = {1, 2, 3, 4, 5}
+B = {4, 5, 6, 7, 8}
+
+# A - B: Elements in A but not in B
+diff_result1 = A - B
+
+# Using the difference() method
+diff_result2 = A.difference(B)
+
+print(diff_result1)
+print(diff_result2)
+
+# B - A: Elements in B but not in A
+diff_result3 = B - A
+diff_result4 = B.difference(A)
+
+print(diff_result3)
+print(diff_result4)</code></pre>
+                <div class="output">
+                    {1, 2, 3}<br>
+                    {1, 2, 3}<br>
+                    {6, 7, 8}<br>
+                    {6, 7, 8}
+                </div>
+            </div>
+            
+            <div class="note">
+                <p>The order matters in difference operations: A - B is not the same as B - A.</p>
+            </div>
+        </div>
+        
+        <div id="set-methods" class="slide">
+            <h2>Other Set Methods</h2>
+            <p>Sets have many other useful methods:</p>
+            
+            <table>
+                <tr>
+                    <th>Method</th>
+                    <th>Description</th>
+                    <th>Example</th>
+                </tr>
+                <tr>
+                    <td>add()</td>
+                    <td>Adds an element to the set</td>
+                    <td>fruits.add("orange")</td>
+                </tr>
+                <tr>
+                    <td>remove()</td>
+                    <td>Removes an element (raises error if not present)</td>
+                    <td>fruits.remove("apple")</td>
+                </tr>
+                <tr>
+                    <td>discard()</td>
+                    <td>Removes an element if present (no error if not found)</td>
+                    <td>fruits.discard("banana")</td>
+                </tr>
+                <tr>
+                    <td>pop()</td>
+                    <td>Removes and returns an arbitrary element</td>
+                    <td>item = fruits.pop()</td>
+                </tr>
+                <tr>
+                    <td>clear()</td>
+                    <td>Removes all elements</td>
+                    <td>fruits.clear()</td>
+                </tr>
+                <tr>
+                    <td>symmetric_difference()</td>
+                    <td>Elements in either set, but not in both</td>
+                    <td>A.symmetric_difference(B)</td>
+                </tr>
+                <tr>
+                    <td>issubset()</td>
+                    <td>Returns True if set is subset of another</td>
+                    <td>A.issubset(B)</td>
+                </tr>
+                <tr>
+                    <td>issuperset()</td>
+                    <td>Returns True if set contains another</td>
+                    <td>A.issuperset(B)</td>
+                </tr>
+            </table>
+            
+            <div class="example">
+                <pre><code>fruits = {"apple", "banana", "cherry"}
+fruits.add("orange")
+print(fruits)
+
+fruits.remove("banana")
+print(fruits)
+
+# Symmetric difference (elements in either set, but not in both)
+A = {1, 2, 3, 4, 5}
+B = {4, 5, 6, 7, 8}
+sym_diff = A ^ B  # or A.symmetric_difference(B)
+print(sym_diff)</code></pre>
+                <div class="output">
+                    {'apple', 'banana', 'cherry', 'orange'}<br>
+                    {'apple', 'cherry', 'orange'}<br>
+                    {1, 2, 3, 6, 7, 8}
+                </div>
+            </div>
+        </div>
+        
+        <div id="dictionaries" class="slide">
+            <h2>Dictionaries in Python</h2>
+            <p>A dictionary is a collection of key-value pairs.</p>
+            
+            <h3>Key Characteristics:</h3>
+            <ul>
+                <li>Keys must be unique and immutable (strings, numbers, tuples)</li>
+                <li>Values can be any data type</li>
+                <li>Ordered (as of Python 3.7+)</li>
+                <li>Mutable (can be changed after creation)</li>
+            </ul>
+            
+            <div class="note">
+                <p><strong>Note:</strong> Before Python 3.7, dictionaries were unordered. In modern Python, they maintain insertion order.</p>
+            </div>
+        </div>
+        
+        <div id="creating-dictionaries" class="slide">
+            <h2>Creating Dictionaries</h2>
+            <p>There are multiple ways to create dictionaries:</p>
+            
+            <div class="example">
+                <pre><code># Using curly braces with key-value pairs
+student = {
+    "name": "John",
+    "age": 21,
+    "courses": ["Math", "CS", "Physics"]
+}
+
+# Using the dict() constructor
+person = dict(name="Alice", age=25, city="New York")
+
+# Creating an empty dictionary
+empty_dict = {}  # or dict()
+
+print(student)
+print(person)
+print(empty_dict)</code></pre>
+                <div class="output">
+                    {'name': 'John', 'age': 21, 'courses': ['Math', 'CS', 'Physics']}<br>
+                    {'name': 'Alice', 'age': 25, 'city': 'New York'}<br>
+                    {}
+                </div>
+            </div>
+            
+            <div class="example">
+                <pre><code># Using dict() with a list of tuples
+items = dict([
+    ("apple", 1.5),
+    ("banana", 0.75),
+    ("orange", 1.25)
+])
+
+print(items)</code></pre>
+                <div class="output">
+                    {'apple': 1.5, 'banana': 0.75, 'orange': 1.25}
+                </div>
+            </div>
+        </div>
+        
+        <div id="accessing-values" class="slide">
+            <h2>Accessing Dictionary Values</h2>
+            <p>There are several ways to access values in a dictionary:</p>
+            
+            <div class="example">
+                <pre><code>student = {
+    "name": "John",
+    "age": 21,
+    "courses": ["Math", "CS", "Physics"]
+}
+
+# Using square bracket notation
+print(student["name"])
+
+# Using the get() method (safer, returns None if key doesn't exist)
+print(student.get("age"))
+
+# Using get() with a default value
+print(student.get("grade", "N/A"))  # Key doesn't exist, returns default</code></pre>
+                <div class="output">
+                    John<br>
+                    21<br>
+                    N/A
+                </div>
+            </div>
+            
+            <div class="note">
+                <p><strong>Important:</strong> Using square brackets with a non-existent key raises a KeyError. The get() method is safer for keys that might not exist.</p>
+            </div>
+        </div>
+        
+        <div id="modifying-dictionaries" class="slide">
+            <h2>Modifying Dictionaries</h2>
+            <p>Dictionaries are mutable and can be modified in various ways:</p>
+            
+            <div class="example">
+                <pre><code>student = {
+    "name": "John",
+    "age": 21,
+    "courses": ["Math", "CS"]
+}
+
+# Adding or updating a key-value pair
+student["age"] = 22
+student["gpa"] = 3.8
+
+print(student)
+
+# Adding a new course to the list
+student["courses"].append("Biology")
+print(student["courses"])
+
+# Removing a key-value pair with pop() or del
+removed_value = student.pop("gpa")
+print(f"Removed GPA: {removed_value}")
+print(student)
+
+del student["age"]
+print(student)</code></pre>
+                <div class="output">
+                    {'name': 'John', 'age': 22, 'courses': ['Math', 'CS'], 'gpa': 3.8}<br>
+                    ['Math', 'CS', 'Biology']<br>
+                    Removed GPA: 3.8<br>
+                    {'name': 'John', 'age': 22, 'courses': ['Math', 'CS', 'Biology']}<br>
+                    {'name': 'John', 'courses': ['Math', 'CS', 'Biology']}
+                </div>
+            </div>
+        </div>
+        
+        <div id="dictionary-methods" class="slide">
+            <h2>Dictionary Methods</h2>
+            <p>Python dictionaries come with many useful methods:</p>
+            
+            <table>
+                <tr>
+                    <th>Method</th>
+                    <th>Description</th>
+                    <th>Example</th>
+                </tr>
+                <tr>
+                    <td>keys()</td>
+                    <td>Returns view of all keys</td>
+                    <td>student.keys()</td>
+                </tr>
+                <tr>
+                    <td>values()</td>
+                    <td>Returns view of all values</td>
+                    <td>student.values()</td>
+                </tr>
+                <tr>
+                    <td>items()</td>
+                    <td>Returns view of all key-value pairs as tuples</td>
+                    <td>student.items()</td>
+                </tr>
+                <tr>
+                    <td>update()</td>
+                    <td>Updates dictionary with key-value pairs from another</td>
+                    <td>student.update({"grade": "A", "year": 2})</td>
+                </tr>
+                <tr>
+                    <td>clear()</td>
+                    <td>Removes all items</td>
+                    <td>student.clear()</td>
+                </tr>
+                <tr>
+                    <td>copy()</td>
+                    <td>Returns a shallow copy</td>
+                    <td>student_copy = student.copy()</td>
+                </tr>
+                <tr>
+                    <td>setdefault()</td>
+                    <td>Returns value for key, or sets default if key doesn't exist</td>
+                    <td>student.setdefault("grade", "B")</td>
+                </tr>
+            </table>
+            
+            <div class="example">
+                <pre><code>student = {
+    "name": "John",
+    "age": 21,
+    "courses": ["Math", "CS", "Physics"]
+}
+
+# Iterating through keys
+print("Keys:")
+for key in student.keys():
+    print(key)
+
+# Iterating through values
+print("\nValues:")
+for value in student.values():
+    print(value)
+
+# Iterating through key-value pairs
+print("\nItems (key-value pairs):")
+for key, value in student.items():
+    print(f"{key}: {value}")</code></pre>
+                <div class="output">
+                    Keys:<br>
+                    name<br>
+                    age<br>
+                    courses<br><br>
+                    Values:<br>
+                    John<br>
+                    21<br>
+                    ['Math', 'CS', 'Physics']<br><br>
+                    Items (key-value pairs):<br>
+                    name: John<br>
+                    age: 21<br>
+                    courses: ['Math', 'CS', 'Physics']
+                </div>
+            </div>
+        </div>
+        
+        <div id="practical-examples" class="slide">
+            <h2>Practical Examples</h2>
+            
+            <h3>Example 1: Counting Word Frequency</h3>
+            <div class="example">
+                <pre><code>def word_frequency(text):
+    words = text.lower().split()
+    frequency = {}
+    
+    for word in words:
+        if word in frequency:
+            frequency[word] += 1
+        else:
+            frequency[word] = 1
+    
+    return frequency
+
+text = "apple banana apple cherry banana apple"
+result = word_frequency(text)
+print(result)</code></pre>
+                <div class="output">
+                    {'apple': 3, 'banana': 2, 'cherry': 1}
+                </div>
+            </div>
+            
+            <h3>Example 2: Finding Common Elements Using Sets</h3>
+            <div class="example">
+                <pre><code>def find_common_elements(list1, list2):
+    # Convert lists to sets to remove duplicates
+    set1 = set(list1)
+    set2 = set(list2)
+    
+    # Find common elements (intersection)
+    common = set1 & set2
+    
+    return common
+
+fruits1 = ["apple", "banana", "cherry", "apple", "orange"]
+fruits2 = ["banana", "kiwi", "orange", "pear"]
+
+common_fruits = find_common_elements(fruits1, fruits2)
+print(common_fruits)</code></pre>
+                <div class="output">
+                    {'banana', 'orange'}
+                </div>
+            </div>
+            
+            <h3>Example 3: Merging Dictionaries</h3>
+            <div class="example">
+                <pre><code>student_info = {
+    "name": "John",
+    "age": 21
+}
+
+student_grades = {
+    "Math": "A",
+    "Physics": "B+",
+    "CS": "A-"
+}
+
+# Method 1: Using update()
+student_complete = student_info.copy()
+student_complete.update(student_grades)
+print(student_complete)
+
+# Method 2: Using dictionary unpacking (Python 3.5+)
+student_complete2 = {**student_info, **student_grades}
+print(student_complete2)
+
+# Method 3: Using the | operator (Python 3.9+)
+# student_complete3 = student_info | student_grades
+# print(student_complete3)</code></pre>
+                <div class="output">
+                    {'name': 'John', 'age': 21, 'Math': 'A', 'Physics': 'B+', 'CS': 'A-'}<br>
+                    {'name': 'John', 'age': 21, 'Math': 'A', 'Physics': 'B+', 'CS': 'A-'}
+                </div>
+            </div>
+        </div>
+        
+        <div class="slide">
+            <h2>Summary</h2>
+            <h3>Sets:</h3>
+            <ul>
+                <li>Unordered collection of unique elements</li>
+                <li>Efficient membership testing</li>
+                <li>Mathematical operations (union, intersection, difference)</li>
+                <li>Use when you need to ensure uniqueness or perform set operations</li>
+            </ul>
+            
+            <h3>Dictionaries:</h3>
+            <ul>
+                <li>Key-value pairs for efficient data lookup</li>
+                <li>Keys must be unique and immutable</li>
+                <li>Values can be any data type</li>
+                <li>Use when you need fast lookup by a key</li>
+            </ul>
+            
+            <div class="note">
+                <p><strong>Practice makes perfect!</strong> Try to incorporate sets and dictionaries into your projects to become more familiar with them.</p>
+            </div>
+        </div>
+        
+        <div class="nav-buttons">
+            <button id="prevBtn" class="nav-button">Previous</button>
+            <span id="slideCounter">Slide 1 of 13</span>
+            <button id="nextBtn" class="nav-button">Next</button>
+        </div>
+    </div>
+    
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const slideCounter = document.getElementById('slideCounter');
+        
+        function showSlide(index) {
+            // Hide all slides
+            slides.forEach(slide => {
+                slide.style.display = 'none';
+            });
+            
+            // Show the current slide
+            slides[index].style.display = 'block';
+            
+            // Update slide counter
+            slideCounter.textContent = `Slide ${index + 1} of ${slides.length}`;
+            
+            // Update button states
+            prevBtn.disabled = index === 0;
+            nextBtn.disabled = index === slides.length - 1;
+            
+            // Scroll to top of slide
+            window.scrollTo(0, slides[index].offsetTop - 20);
+        }
+        
+        // Event listeners for navigation buttons
+        prevBtn.addEventListener('click', () => {
+            if (currentSlide > 0) {
+                currentSlide--;
+                showSlide(currentSlide);
+            }
+        });
+        
+        nextBtn.addEventListener('click', () => {
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                showSlide(currentSlide);
+            }
+        });
+        
+        // Handle keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft' && currentSlide > 0) {
+                currentSlide--;
+                showSlide(currentSlide);
+            } else if (e.key === 'ArrowRight' && currentSlide < slides.length - 1) {
+                currentSlide++;
+                showSlide(currentSlide);
+            }
+        });
+        
+        // Initialize the first slide
+        showSlide(currentSlide);
+        
+        // Add click handlers for TOC links
+        document.querySelectorAll('#toc a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                const targetSlide = Array.from(slides).findIndex(slide => slide.id === targetId);
+                if (targetSlide !== -1) {
+                    currentSlide = targetSlide;
+                    showSlide(currentSlide);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
